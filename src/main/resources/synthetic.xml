@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+
+    THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS
+    FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
+
+-->
+<synthetic xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd" xmlns="http://www.xebialabs.com/deployit/synthetic" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+   <type type="gitlab.Server" extends="configuration.HttpConnection">
+       <property name="APIKey" required="false" label="API Key" />
+   </type>
+
+   <type type="gitlab.CreateMergeRequest" extends="xlrelease.PythonScript">
+       <property name="gitLabServer" category="input" label="Server" referenced-type="gitlab.Server" kind="ci" />
+       <property name="project_id" category="input"/>
+       <property name="source_branch" category="input"/>
+       <property name="target_branch" category="input"/>
+       <property name="title" category="input"/>
+       <property name="APIKey" category="input" required="false" label="API Key" />
+
+       <property name="mergeId" category="output" label="Merge ID" />
+   </type>
+
+   <type type="gitlab.AcceptMergeRequest" extends="xlrelease.PythonScript">
+       <property name="gitLabServer" category="input" label="Server" referenced-type="gitlab.Server" kind="ci" />
+       <property name="project_id" category="input"/>
+       <property name="mergeId" category="input" />
+       <property name="APIKey" category="input" required="false" label="API Key" />
+   </type>
+
+</synthetic>
