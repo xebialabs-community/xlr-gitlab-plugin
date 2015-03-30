@@ -15,8 +15,8 @@ gitlabURL = gitLabServer['url']
 if gitlabURL.endswith('/'):
     gitlabURL = gitlabURL[:len(gitlabURL)-1]
 
-if APIKey == '':
-    if gitLabServer['APIKey'] <> '':
+if APIKey == None:
+    if gitLabServer['APIKey'] <> None:
         APIKey = gitLabServer['APIKey']
     else:
         print "API Key not set"

@@ -15,16 +15,16 @@ gitlabURL = gitLabServer['url']
 if gitlabURL.endswith('/'):
     gitlabURL = gitlabURL[:len(gitlabURL)-1]
 
-if APIKey == '':
-    if gitLabServer['APIKey'] <> '':
+if APIKey == None:
+    if gitLabServer['APIKey'] <> None:
         APIKey = gitLabServer['APIKey']
     else:
         print "API Key not set"
         sys.exit(1)
 
 request = HttpRequest(gitLabServer)
+response = request.put('/api/v3/projects/' + project_id + '/merge_request/' + mergeId + 'merge?private_token=' + APIKey, '', contentType = '')
 response = request.put('/api/v3/projects/' + project_id + '/merge_request/' + mergeId + '?private_token=' + APIKey + '&state_event=close', '', contentType = '')
-response = request.put('/api/v3/projects/' + project_id + '/merge_request/' + mergeId + '?private_token=' + APIKey + '&state_event=merge', '', contentType = '')
 
 if response.status < 400:
     data = json.loads(response.response)
