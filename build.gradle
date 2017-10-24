@@ -1,18 +1,18 @@
-buildscript {
-  repositories {
-    jcenter()
-  }
-  dependencies {
-    classpath "nl.javadude.gradle.plugins:license-gradle-plugin:0.11.0"
-  }
+plugins {
+    id "com.github.hierynomus.license" version "0.13.0"
 }
 
-version=1.3
-
-apply plugin: "com.github.hierynomus.license"
+defaultTasks 'build'
 apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+version='7.2.0.1'
 
 license {
-    header rootProject.file('src/main/license/xebialabs_community.license')
-    strictCheck true
+    header rootProject.file('License.md')
+    strictCheck false
+    excludes(["**/*.json"])
+    ext.year = Calendar.getInstance().get(Calendar.YEAR)
+    ext.name = 'XEBIALABS'
 }

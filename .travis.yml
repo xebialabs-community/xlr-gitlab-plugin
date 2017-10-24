@@ -1,0 +1,17 @@
+language: java
+sudo: false
+deploy:
+  provider: releases
+  file: build/libs/xlr-gitlab-plugin-7.2.0.1.jar
+  skip_cleanup: true
+  on:
+    all_branches: true
+    tags: true
+    repo: xebialabs-community/xlr-gitlab-plugin
+  api_key:
+    secure:
+      secure: Gogs4jifdmoKFjm3lkNlDY/VqcO4iVkbJSAFesGH/oDVHydMumYmx5WfNwTu5La8Xn/SGWq8kBPArk4IAmG29j6XbUFVL46fpJlZmsPU6IbuzYuJIZ/vq2i79uciBIx0jocydNiwvPsrhaKAzw0Lc644kJRA3XWufXTAmo0TZUE=
+notifications:
+  hipchat:
+    rooms:
+      secure: gSO4A3L9GxNItRX3Sus71P1iaMApeMTos3A3U6NmF+yWecsVdK7K0x/wchoseYIUrOpc0HDQ3fYW74jweX3CQac7NvUUopxVm7gZa+oZX6wV8Tv2WmUe4N/vPMK54P4AhTgjLgI64gTvVaUiqFA30wEpAbQ4akXUjPm7uYdl8l4=
