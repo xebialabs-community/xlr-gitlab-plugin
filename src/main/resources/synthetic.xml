@@ -17,21 +17,41 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="scriptLocation" default="gitlab/Task.py" hidden="true"/>
         <property name="iconLocation" default="gitlab/gitlab.png" hidden="true"/>
         <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci" />
+        <property name="api_key" category="input" required="false" label="API Key"/>
     </type>
 
 
     <type type="gitlab.CreateMergeRequest" extends="gitlab.Task">
-        <property name="project_id" category="input" label="Project ID"/>
-        <property name="source_branch" category="input" label="Source Branch"/>
-        <property name="target_branch" category="input" label="Target Branch"/>
-        <property name="title" category="input" label="Merge Title"/>
-        <property name="api_key" category="input" required="false" label="API Key" />
-        <property name="merge_id" category="output" label="Merge ID" />
+        <property name="project_id" category="input" required="true" label="Project ID"/>
+        <property name="source_branch" category="input" required="true" label="Source Branch"/>
+        <property name="target_branch" category="input" required="true" label="Target Branch"/>
+        <property name="title" category="input" required="true" label="Merge Title"/>
+        <property name="target_project_id" category="input" required="false" label="Target Project ID"/>
+        <property name="merge_id" category="output" label="Merge ID"/>
     </type>
 
     <type type="gitlab.AcceptMergeRequest" extends="gitlab.Task">
         <property name="project_id" category="input" label="Project ID"/>
         <property name="merge_id" category="input" label="Merge ID"/>
-        <property name="api_key" category="input" required="false" label="API Key" />
+    </type>
+
+    <type type="gitlab.QueryMergeRequests" extends="gitlab.Task">
+        <property name="project_id" category="input" required="true" label="Project ID"/>
+        <property name="milestone" category="input" required="false" label="Milestone"/>
+        <property name="state" category="input" kind="enum" required="true" default="opened">
+            <enum-values>
+                <value label="Opened">opened</value>
+                <value label="Closed">closed</value>
+                <value label="Merged">merged</value>
+                <value label="All">all</value>
+            </enum-values>
+        </property>
+        <property name="merge_requests" category="output" label="Merge Requests"/>
+    </type>
+
+    <type type="gitlab.QueryProject" extends="gitlab.Task">
+        <property name="project_name" category="input" required="true" label="Project Name"/>
+        <property name="namespace" category="input" required="false" label="Namespace"/>
+        <property name="project_id" category="output" label="Project ID"/>
     </type>
 </synthetic>

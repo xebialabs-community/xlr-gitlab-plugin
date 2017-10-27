@@ -13,5 +13,6 @@ client = Client.get_client()
 method = str(task.getTaskType()).lower().replace('.', '_')
 call = getattr(client, method)
 response = call(locals())
-for key, value in response.items():
-    locals()[key] = value
+if response is not None:
+    for key, value in response.items():
+        locals()[key] = value

@@ -7,7 +7,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
-version='7.2.0.1'
+version='7.2.0.2'
 
 license {
     header rootProject.file('License.md')
