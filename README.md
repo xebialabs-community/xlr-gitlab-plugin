@@ -9,32 +9,56 @@
 [xlr-gitlab-plugin-downloads-image]: https://img.shields.io/github/downloads/xebialabs-community/xlr-gitlab-plugin/total.svg
 
 # Preface #
+This document describes the functionality provided by the xlr-gitlab-plugin.
 
-This document describes the functionality provided by the xlr-github-plugin.
-
-See the **XL Release Reference Manual** for background information on XL Release and release concepts.
+Please see the [XL Release Documentation](https://docs.xebialabs.com/xl-release/) for background information on XL Release and release concepts.
 
 # Overview #
+The xlr-gitlab-plugin provides the following XL Release functionality:
+  * Create a merge request in GitLab.
+  * Accept a merge request in GitLab.
+  * Query for projects in GitLab.
+  * Query for merge requests in GitLab.
 
-The xlr-github-plugin is a XL Release plugin that allows to
-  * Create a merge request in GitLab
-  * Accept a merge request in GitLab
+## Shared Configuration ##
++ #### GitLab Server
+![Server Configuration](images/shared_config.png)
+  * ###### Title : Title of GitLab server configuration.
+  * ###### Url : URL for GitLab server.
+  * ###### API Key : API key to use (configured in GitLab).
 
-## Types ##
+## Tasks ##
++ #### Create Merge Request
+![Create Merge Request](images/create_merge_request.png)
+  * ###### GitLab Server : The GitLab Server configuration to use for this task.
+  * ###### API Key : Optional override API Key.
+  * ###### Project ID : Numerical Project ID for GitLab Project.
+  * ###### Source Branch : Source branch for the merge request.
+  * ###### Target Branch : Target branch for the merge request.
+  * ###### Merge Title : Title for the merge request.
+  * ###### Target Project ID : Numerical Target Project ID for the target GitLab Project (forked repos).
+  * ###### Merge ID : Merge ID of the newly created merge request returned from GitLab.
 
-+ Create Merge Request
-  * 'project_id' : Numerical Project ID
-  * 'source_branch' : Source branch for the merge request
-  * 'target_branch' : Target branch for the merge request
-  * 'title' : Title for the merge request
-  * 'API Key' : Optional substitute API Key
-  * 'Merge ID' : Merge ID returned from GitLab
++ #### Accept Merge Request
+![Create Merge Request](images/accept_merge_request.png)
+  * ###### GitLab Server : The GitLab Server configuration to use for this task.
+  * ###### API Key : Optional override API Key.
+  * ###### Project ID : Numerical Project ID for GitLab Project.
+  * ###### Merge ID : Numerical Merge ID for the GitLab Merge Request.
 
-+ Accept Merge Request
-  * 'project_id' : Numerical Project ID
-  * 'merge_id' : Merge ID to accept
-  * 'API Key' : Optional substitute API Key
++ #### Query Project
+![Create Merge Request](images/query_project.png)
+  * ###### GitLab Server : The GitLab Server configuration to use for this task.
+  * ###### API Key : Optional override API Key.
+  * ###### Project Name : Name of the Project to query for.
+  * ###### Namespace : Optional namespace to limit the query to (groups).
+  * ###### Project ID : Numerical Project ID for GitLab Project.
 
-+ GitLab Server
-  * 'address' : URL for GitLab
-  * 'API Key' : API key to use
++ #### Query Merge Requests
+![Create Merge Request](images/query_merge_requests.png)
+  * ###### GitLab Server : The GitLab Server configuration to use for this task.
+  * ###### API Key : Optional override API Key.
+  * ###### Project ID : Numerical Project ID for GitLab Project.
+  * ###### Milestone : Optional milestone to query on.
+  * ###### State : State of the Merge Requests to find (all, opened, closed, merged).
+  * ###### Merge Requests : The list of Merge Requests discovered by the query (json).
