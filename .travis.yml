@@ -2,7 +2,7 @@ language: java
 sudo: false
 deploy:
   provider: releases
-  file: build/libs/xlr-gitlab-plugin-7.2.0.2.jar
+  file: build/libs/xlr-gitlab-plugin-7.2.0.3.jar
   skip_cleanup: true
   on:
     all_branches: true

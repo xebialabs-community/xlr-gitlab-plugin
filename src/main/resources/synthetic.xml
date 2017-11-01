@@ -9,14 +9,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 -->
 <synthetic xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd" xmlns="http://www.xebialabs.com/deployit/synthetic"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <type type="gitlab.Server" extends="configuration.HttpConnection">
-        <property name="api_key" required="true" label="API Key" password="true" />
+    <type type="gitlab.Server" extends="xlrelease.Configuration">
+        <property name="url" required="true" label="Server URL"/>
+        <property name="api_key" required="true" label="API Key" password="true"/>
     </type>
 
     <type type="gitlab.Task" extends="xlrelease.PythonScript" virtual="true">
         <property name="scriptLocation" default="gitlab/Task.py" hidden="true"/>
         <property name="iconLocation" default="gitlab/gitlab.png" hidden="true"/>
-        <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci" />
+        <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci"/>
         <property name="api_key" category="input" required="false" label="API Key"/>
     </type>
 
@@ -38,7 +39,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <type type="gitlab.QueryMergeRequests" extends="gitlab.Task">
         <property name="project_id" category="input" required="true" label="Project ID"/>
         <property name="milestone" category="input" required="false" label="Milestone"/>
-        <property name="state" category="input" kind="enum" required="true" default="opened">
+        <property name="state" category="input" kind="enum" required="true" default="all">
             <enum-values>
                 <value label="Opened">opened</value>
                 <value label="Closed">closed</value>
@@ -53,5 +54,24 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="project_name" category="input" required="true" label="Project Name"/>
         <property name="namespace" category="input" required="false" label="Namespace"/>
         <property name="project_id" category="output" label="Project ID"/>
+    </type>
+
+    <!-- Tile Configuration -->
+    <type type="gitlab.MergeRequestsTile" label="GitLab Merge Requests Tile" extends="xlrelease.Tile">
+        <property name="uri" hidden="true" default="gitlab/MergeRequestsTile/gitlab-merge-requests-tile-summary-view.html"/>
+        <property name="detailsUri" hidden="true" default="gitlab/MergeRequestsTile/gitlab-merge-requests-tile-details-view.html" />
+        <property name="title" description="Tile title." default="GitLab Merge Requests Summary"/>
+        <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci" />
+        <property name="project_id" category="input" required="true" label="Project ID"/>
+        <property name="milestone" category="input" required="false" label="Milestone"/>
+        <property name="state" category="input" kind="enum" required="true" default="all">
+            <enum-values>
+                <value label="Opened">opened</value>
+                <value label="Closed">closed</value>
+                <value label="Merged">merged</value>
+                <value label="All">all</value>
+            </enum-values>
+        </property>
+        <property name="api_key" category="input" required="false" label="API Key"/>
     </type>
 </synthetic>

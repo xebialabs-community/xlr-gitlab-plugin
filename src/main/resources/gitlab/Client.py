@@ -95,7 +95,7 @@ class Client(object):
 
     @staticmethod
     def gitlab_querymergerequests(variables):
-        endpoint = Client.build_projects_endpoint("/%s/merge_requests?state=%s" % (variables['project_id'], variables['state']), variables)
+        endpoint = Client.build_projects_endpoint("/%s/merge_requests?per_page=100&state=%s" % (variables['project_id'], variables['state']), variables)
         if variables['milestone'] is not None:
             endpoint = "%s&milestone=%s" % (endpoint, variables['milestone'])
         response = Client.get_request(variables).get(endpoint)
