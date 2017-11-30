@@ -18,7 +18,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="scriptLocation" default="gitlab/Task.py" hidden="true"/>
         <property name="iconLocation" default="gitlab/gitlab.png" hidden="true"/>
         <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci"/>
-        <property name="api_key" category="input" required="false" label="API Key"/>
+        <property name="api_key" category="input" required="false" label="API Key" password="true" description="Optional override Server API Key."/>
     </type>
 
 
