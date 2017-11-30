@@ -29,8 +29,8 @@ class Client(object):
     @staticmethod
     def get_gitlab_api_key(variables):
         gitlab_server = Client.get_gitlab_server(variables)
-        if variables['api_key'] is None:
-            if variables['gitlab_server']['api_key'] is not None:
+        if not variables['api_key']:
+            if variables['gitlab_server']['api_key']:
                 return gitlab_server['api_key']
             else:
                 raise Exception("API Key Not Set!")
