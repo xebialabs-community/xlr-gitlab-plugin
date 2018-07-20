@@ -15,50 +15,98 @@ Please see the [XL Release Documentation](https://docs.xebialabs.com/xl-release/
 
 # Overview #
 The xlr-gitlab-plugin provides the following XL Release functionality:
+
+### Tasks ###
   * Create a merge request in GitLab.
   * Accept a merge request in GitLab.
   * Query for projects in GitLab.
   * Query for merge requests in GitLab.
+  
+### Webhook (Configured in Gitlab) ###
+  * Commit Webhook
+  * Merge Pull Request Webhook
 
 ## Shared Configuration ##
-+ #### GitLab Server
+#### GitLab Server
 ![Server Configuration](images/shared_config.png)
-  * ###### Title : Title of GitLab server configuration.
-  * ###### Url : URL for GitLab server.
-  * ###### API Key : API key to use (configured in GitLab).
+
+  * Title : Title of GitLab server configuration.
+  * Url : URL for GitLab server.
+  * API Key : API key to use (configured in GitLab).
 
 ## Tasks ##
-+ #### Create Merge Request
+#### Create Merge Request
 ![Create Merge Request](images/create_merge_request.png)
-  * ###### GitLab Server : The GitLab Server configuration to use for this task.
-  * ###### API Key : Optional override API Key.
-  * ###### Project ID : Numerical Project ID for GitLab Project.
-  * ###### Source Branch : Source branch for the merge request.
-  * ###### Target Branch : Target branch for the merge request.
-  * ###### Merge Title : Title for the merge request.
-  * ###### Target Project ID : Numerical Target Project ID for the target GitLab Project (forked repos).
-  * ###### Merge ID : Merge ID of the newly created merge request returned from GitLab.
 
-+ #### Accept Merge Request
+  *  GitLab Server : The GitLab Server configuration to use for this task.
+  *  API Key : Optional override API Key.
+  *  Project ID : Numerical Project ID for GitLab Project.
+  *  Source Branch : Source branch for the merge request.
+  *  Target Branch : Target branch for the merge request.
+  *  Merge Title : Title for the merge request.
+  *  Target Project ID : Numerical Target Project ID for the target GitLab Project (forked repos).
+  *  Merge ID : Merge ID of the newly created merge request returned from GitLab.
+
+#### Accept Merge Request
 ![Create Merge Request](images/accept_merge_request.png)
-  * ###### GitLab Server : The GitLab Server configuration to use for this task.
-  * ###### API Key : Optional override API Key.
-  * ###### Project ID : Numerical Project ID for GitLab Project.
-  * ###### Merge ID : Numerical Merge ID for the GitLab Merge Request.
 
-+ #### Query Project
+  *  GitLab Server : The GitLab Server configuration to use for this task.
+  *  API Key : Optional override API Key.
+  *  Project ID : Numerical Project ID for GitLab Project.
+  *  Merge ID : Numerical Merge ID for the GitLab Merge Request.
+
+#### Query Project
 ![Create Merge Request](images/query_project.png)
-  * ###### GitLab Server : The GitLab Server configuration to use for this task.
-  * ###### API Key : Optional override API Key.
-  * ###### Project Name : Name of the Project to query for.
-  * ###### Namespace : Optional namespace to limit the query to (groups).
-  * ###### Project ID : Numerical Project ID for GitLab Project.
 
-+ #### Query Merge Requests
+  *  GitLab Server : The GitLab Server configuration to use for this task.
+  *  API Key : Optional override API Key.
+  *  Project Name : Name of the Project to query for.
+  *  Namespace : Optional namespace to limit the query to (groups).
+  *  Project ID : Numerical Project ID for GitLab Project.
+
+#### Query Merge Requests
 ![Create Merge Request](images/query_merge_requests.png)
-  * ###### GitLab Server : The GitLab Server configuration to use for this task.
-  * ###### API Key : Optional override API Key.
-  * ###### Project ID : Numerical Project ID for GitLab Project.
-  * ###### Milestone : Optional milestone to query on.
-  * ###### State : State of the Merge Requests to find (all, opened, closed, merged).
-  * ###### Merge Requests : The list of Merge Requests discovered by the query (json).
+
+  *  GitLab Server : The GitLab Server configuration to use for this task.
+  *  API Key : Optional override API Key.
+  *  Project ID : Numerical Project ID for GitLab Project.
+  *  Milestone : Optional milestone to query on.
+  *  State : State of the Merge Requests to find (all, opened, closed, merged).
+  *  Merge Requests : The list of Merge Requests discovered by the query (json).
+
+## Webhooks ##
+
+### Code Commit/Push Webhook ###
+
+##### Gitlab Webhook Configuration
+
+Here's the URL Format : 
+```
+http://username:password@xlrserver:port/api/extension/gitlab/commit_webhook?template=<templateName/prefix> 
+```
+
+![Gitlab Webhook Configuration](images/commit_webhook_configure.png)
+
+##### Release Summary view in XL Release  #####
+![Release Summary view in XL Release](images/commit_webhook_release.png)
+
+##### Release Variables created #####
+![Release Variables created](images/commit_webhook_variables.png)
+
+
+### Merge Pull Request Webhook ###
+
+##### Gitlab Webhook Configuration #####
+```
+http://username:password@xlrserver:port/api/extension/gitlab/pr_webhook?template=<templateName/prefix> 
+```
+
+![Gitlab Webhook Configuration](images/pr_webhook_configure.png)
+
+##### Release Summary view in XL Release  #####
+![Release Summary view in XL Release](images/pr_webhook_release.png)
+
+##### Release Variables created #####
+![Release Variables created](images/pr_webhook_variables.png)
+
+
