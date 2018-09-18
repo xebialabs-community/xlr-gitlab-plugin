@@ -56,6 +56,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="project_id" category="output" label="Project ID"/>
     </type>
 
+    <type type="gitlab.CreateTag" extends="gitlab.Task">
+        <property name="project_id" category="input" required="true" label="Project ID"/>
+        <property name="ref" category="input" required="true" label="Commit SHA, another tag name, or branch name"/>
+        <property name="tag_name" category="input" required="true" label="Tag Name"/>
+        <property name="message" category="input" required="false" label="An optional description for the tag"/>
+        <property name="commit_id" category="output" label="The ID of the Commit related to the tag"/>
+    </type>
+
     <!-- Tile Configuration -->
     <type type="gitlab.MergeRequestsTile" label="GitLab Merge Requests Tile" extends="xlrelease.Tile">
         <property name="uri" hidden="true" default="gitlab/MergeRequestsTile/gitlab-merge-requests-tile-summary-view.html"/>

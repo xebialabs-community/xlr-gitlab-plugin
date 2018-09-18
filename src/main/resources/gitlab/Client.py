@@ -101,3 +101,12 @@ class Client(object):
         response = Client.get_request(variables).get(endpoint)
         Client.handle_response(response)
         return {"merge_requests" : "%s" % response.response}
+
+    @staticmethod
+    def gitlab_createtag(variables):
+        content = Client.build_content({"tag_name" : variables['tag_name'], "ref" : variables['ref'], "message" : variables['message']})
+        data = Client.handle_response(Client.get_request(variables).post(
+            Client.build_projects_endpoint("/%s/repository/tags?" % variables['project_id'], variables),
+            content,
+            contentType = ''))
+        return {"commit_id" : "%s" % data.get('commit').get('id')}
