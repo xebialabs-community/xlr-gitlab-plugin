@@ -109,4 +109,4 @@ class Client(object):
             Client.build_projects_endpoint("/%s/repository/branches?" % variables['project_id'], variables),
             content,
             contentType = ''))
-        return {"merge_id" : "%s" % data.get('iid')}
+        return {"commit_id" : "%s" % data['commit']['id']}

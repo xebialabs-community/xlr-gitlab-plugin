@@ -60,7 +60,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <type type="gitlab.CreateBranch" extends="gitlab.Task">
         <property name="project_id" category="input" required="true" label="Project ID"/>
         <property name="branch" category="input" required="true" label="New Branch Name"/>
-        <property name="ref" category="input" required="true" label="Branch Name or Commit SHA to Create Branch From"/>
+        <property name="ref" category="input" required="true" label="Reference" description="Branch name or commit SHA to create branch from"/>
+        <property name="commit_id" category="output" label="Commit Source" description="Commit ID used to generate the new branch"/>
     </type>
 
     <!-- Tile Configuration -->
