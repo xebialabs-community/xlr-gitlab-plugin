@@ -78,10 +78,11 @@ class Client(object):
 
     @staticmethod
     def filter_project_on_namespace(data, namespace):
-        if namespace is not None:
-            for project in data:
-                if namespace in project['name_with_namespace']:
-                    return {"project_id" : "%s" % project['id']}
+        if namespace is None:
+            return {"project_id" : ""}
+        for project in data:
+            if namespace in project['name_with_namespace']:
+                return {"project_id" : "%s" % project['id']}
         return {"project_id" : ""}
 
     @staticmethod
