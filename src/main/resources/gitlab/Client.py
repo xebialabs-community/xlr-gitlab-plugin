@@ -1,5 +1,5 @@
 #
-# Copyright 2018 XEBIALABS
+# Copyright 2019 XEBIALABS
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 #
@@ -78,10 +78,11 @@ class Client(object):
 
     @staticmethod
     def filter_project_on_namespace(data, namespace):
-        if namespace is not None:
-            for project in data:
-                if namespace in project['name_with_namespace']:
-                    return {"project_id" : "%s" % project['id']}
+        if namespace is None:
+            return {"project_id" : ""}
+        for project in data:
+            if namespace in project['name_with_namespace']:
+                return {"project_id" : "%s" % project['id']}
         return {"project_id" : ""}
 
     @staticmethod
@@ -101,3 +102,12 @@ class Client(object):
         response = Client.get_request(variables).get(endpoint)
         Client.handle_response(response)
         return {"merge_requests" : "%s" % response.response}
+
+    @staticmethod
+    def gitlab_createbranch(variables):
+        content = Client.build_content({"branch" : variables['branch'], "ref" : variables['ref']})
+        data = Client.handle_response(Client.get_request(variables).post(
+            Client.build_projects_endpoint("/%s/repository/branches?" % variables['project_id'], variables),
+            content,
+            contentType = ''))
+        return {"commit_id" : "%s" % data['commit']['id']}
