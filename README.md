@@ -21,6 +21,7 @@ The xlr-gitlab-plugin provides the following XL Release functionality:
   * Accept a merge request in GitLab.
   * Query for projects in GitLab.
   * Query for merge requests in GitLab.
+  * Create a Tag in GitLab.
   
 ### Webhook (Configured in Gitlab) ###
   * Commit Webhook
@@ -73,6 +74,17 @@ The xlr-gitlab-plugin provides the following XL Release functionality:
   *  Milestone : Optional milestone to query on.
   *  State : State of the Merge Requests to find (all, opened, closed, merged).
   *  Merge Requests : The list of Merge Requests discovered by the query (json).
+
+#### Create Tag
+![Create Tag](images/create_tag.png)
+
+  *  GitLab Server : The GitLab Server configuration to use for this task.
+  *  API Key : Optional override API Key.
+  *  Project ID : Numerical Project ID for GitLab Project.
+  *  Ref : Commit SHA, another tag name, or branch name to create the tag from.
+  *  Tag Name : The name of the tag.
+  *  Tag Message : An optional description for the tag.
+  *  Commit ID : The ID of the commit used by the newly created tag (useful when specifying a branch or tag name as Ref).
 
 ## Webhooks ##
 
