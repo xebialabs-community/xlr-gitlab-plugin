@@ -59,10 +59,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
     <type type="gitlab.CreateTag" extends="gitlab.Task">
         <property name="project_id" category="input" required="true" label="Project ID"/>
-        <property name="ref" category="input" required="true" label="Commit SHA, another tag name, or branch name"/>
+        <property name="ref" category="input" required="true" label="Reference" description="Commit SHA, another tag name, or branch name"/>
         <property name="tag_name" category="input" required="true" label="Tag Name"/>
-        <property name="message" category="input" required="false" label="An optional description for the tag"/>
-        <property name="commit_id" category="output" label="The ID of the Commit related to the tag"/>
+        <property name="message" category="input" required="false" label="Message" description="An optional description for the tag"/>
+        <property name="commit_id" category="output" label="Commit ID" description="The ID of the Commit related to the tag"/>
+    </type>
 
     <type type="gitlab.CreateBranch" extends="gitlab.Task">
         <property name="project_id" category="input" required="true" label="Project ID"/>
