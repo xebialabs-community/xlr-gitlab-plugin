@@ -17,11 +17,12 @@ Please see the [XL Release Documentation](https://docs.xebialabs.com/xl-release/
 The xlr-gitlab-plugin provides the following XL Release functionality:
 
 ### Tasks ###
-  * Create a merge request in GitLab.
-  * Accept a merge request in GitLab.
-  * Query for projects in GitLab.
-  * Query for merge requests in GitLab.
-  * Create a Tag in GitLab.
+  * Query for projects
+  * Query for merge requests
+  * Create a merge request
+  * Accept a merge request
+  * Create a tag
+  * Create a branch
   
 ### Webhook (Configured in Gitlab) ###
   * Commit Webhook
@@ -75,6 +76,15 @@ The xlr-gitlab-plugin provides the following XL Release functionality:
   *  State : State of the Merge Requests to find (all, opened, closed, merged).
   *  Merge Requests : The list of Merge Requests discovered by the query (json).
 
+#### Create Branch
+![Create Branch](images/create_branch.png)
+
+  *  GitLab Server : The GitLab Server configuration to use for this task.
+  *  API Key : Optional override API Key.
+  *  Project ID : Numerical Project ID for GitLab Project.
+  *  New Branch Name : The name of the branch to be created.
+  *  Ref : Commit SHA or existing branch name to create the new branch from.
+
 #### Create Tag
 ![Create Tag](images/create_tag.png)
 
@@ -122,3 +132,12 @@ http://username:password@xlrserver:port/api/extension/gitlab/pr_webhook?template
 ![Release Variables created](images/pr_webhook_variables.png)
 
 
+## Dashboard Tiles ##
+
+#### Merge Requests
+
+##### Tile View
+![Merge Requests Tile Small](images/merge_requests_tile_small.png)
+
+##### Expanded View
+![Merge Requests Tile Large](images/merge_requests_tile_large.png)
