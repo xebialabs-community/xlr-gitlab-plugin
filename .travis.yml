@@ -10,7 +10,3 @@ deploy:
     all_branches: true
     tags: true
     repo: xebialabs-community/xlr-gitlab-plugin
-notifications:
-  hipchat:
-    rooms:
-      secure: gSO4A3L9GxNItRX3Sus71P1iaMApeMTos3A3U6NmF+yWecsVdK7K0x/wchoseYIUrOpc0HDQ3fYW74jweX3CQac7NvUUopxVm7gZa+oZX6wV8Tv2WmUe4N/vPMK54P4AhTgjLgI64gTvVaUiqFA30wEpAbQ4akXUjPm7uYdl8l4=
