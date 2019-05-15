@@ -11,6 +11,7 @@
 import json
 from xlrelease.HttpRequest import HttpRequest
 
+
 class Client(object):
     def __init__(self):
         return
@@ -49,6 +50,10 @@ class Client(object):
         return "/api/v4/projects%s&private_token=%s" % (url, Client.get_gitlab_api_key(variables))
 
     @staticmethod
+    def build_projects_pipeline_endpoint(project):
+        return "/api/v4/projects/{0}/trigger/pipeline".format(project)
+
+    @staticmethod
     def build_content(params):
         content = ""
         for key in params.keys():
@@ -64,33 +69,37 @@ class Client(object):
 
     @staticmethod
     def gitlab_createmergerequest(variables):
-        content = Client.build_content({"source_branch" : variables['source_branch'], "target_branch" : variables['target_branch'], "title" : variables['title'], "target_project_id" : variables['target_project_id']})
+        content = Client.build_content(
+            {"source_branch": variables['source_branch'], "target_branch": variables['target_branch'],
+             "title": variables['title'], "target_project_id": variables['target_project_id']})
         data = Client.handle_response(Client.get_request(variables).post(
             Client.build_projects_endpoint("/%s/merge_requests?" % variables['project_id'], variables),
             content,
-            contentType = ''))
-        return {"merge_id" : "%s" % data.get('iid')}
+            contentType=''))
+        return {"merge_id": "%s" % data.get('iid')}
 
     @staticmethod
     def gitlab_acceptmergerequest(variables):
         Client.handle_response(Client.get_request(variables).put(
-            Client.build_projects_endpoint("/%s/merge_requests/%s/merge?" % (variables['project_id'], variables['merge_id']), variables), '', contentType = ''))
+            Client.build_projects_endpoint(
+                "/%s/merge_requests/%s/merge?" % (variables['project_id'], variables['merge_id']), variables), '',
+            contentType=''))
 
     @staticmethod
     def filter_project_on_namespace(data, namespace):
         if namespace is None:
-            return {"project_id" : ""}
+            return {"project_id": ""}
         for project in data:
             if namespace in project['name_with_namespace']:
-                return {"project_id" : "%s" % project['id']}
-        return {"project_id" : ""}
+                return {"project_id": "%s" % project['id']}
+        return {"project_id": ""}
 
     @staticmethod
     def gitlab_queryproject(variables):
         data = Client.handle_response(Client.get_request(variables).get(
             Client.build_projects_endpoint("?search=%s" % variables['project_name'], variables)))
         if len(data) == 1:
-            return {"project_id" : "%s" % data[0]['id']}
+            return {"project_id": "%s" % data[0]['id']}
         elif len(data) > 1:
             return Client.filter_project_on_namespace(data, variables['namespace'])
 
@@ -130,18 +139,44 @@ class Client(object):
 
     @staticmethod
     def gitlab_createtag(variables):
-        content = Client.build_content({"tag_name" : variables['tag_name'], "ref" : variables['ref'], "message" : variables['message']})
+        content = Client.build_content(
+            {"tag_name": variables['tag_name'], "ref": variables['ref'], "message": variables['message']})
         data = Client.handle_response(Client.get_request(variables).post(
             Client.build_projects_endpoint("/%s/repository/tags?" % variables['project_id'], variables),
             content,
-            contentType = ''))
-        return {"commit_id" : "%s" % data.get('commit').get('id')}
+            contentType=''))
+        return {"commit_id" : "%s" % data['commit']['id']}
 
     @staticmethod
     def gitlab_createbranch(variables):
-        content = Client.build_content({"branch" : variables['branch'], "ref" : variables['ref']})
+        content = Client.build_content({"branch": variables['branch'], "ref": variables['ref']})
         data = Client.handle_response(Client.get_request(variables).post(
             Client.build_projects_endpoint("/%s/repository/branches?" % variables['project_id'], variables),
             content,
-            contentType = ''))
-        return {"commit_id" : "%s" % data['commit']['id']}
+            contentType=''))
+        return {"commit_id": "%s" % data['commit']['id']}
+
+    @staticmethod
+    def gitlab_triggerpipeline(variables):
+        endpoint = "/api/v4/projects/{0}/ref/{1}/trigger/pipeline?token={2}".format(variables['project_id'],
+                                                                                    variables['ref'],
+                                                                                    variables['token'])
+        # print "* gitlab_triggerpipeline.endpoint: {0}".format(endpoint)
+        data = Client.handle_response(Client.get_request(variables).post(endpoint, '', contentType=''))
+        print "[Pipeline #{0}]({1})".format(data["id"], data["web_url"])
+        status = {"pipeline_id": "%s" % data['id'], "status": "%s" % data['status']}
+        return status
+
+    @staticmethod
+    def gitlab_pipeline_status(variables):
+        pipeline_id = variables['pipeline_id']
+        endpoint = "/api/v4/projects/{0}/pipelines/{1}?private_token={2}".format(variables['project_id'], pipeline_id,
+                                                                                 Client.get_gitlab_api_key(variables))
+        # print "* gitlab_pipeline_status.endpoint: {0}".format(endpoint)
+        data = Client.handle_response(Client.get_request(variables).get(endpoint))
+        # print "* data {0}".format(data)
+        status = {"pipeline_id": "{0}".format(data.get('id')),
+                  "status": data.get('status'),
+                  "web_url": data.get('web_url')}
+        # print "* gitlab_pipeline_status.status: {0}".format(status)
+        return status

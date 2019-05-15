@@ -14,6 +14,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="api_key" required="true" label="API Key" password="true"/>
     </type>
 
+    <type type="gitlab.TriggerPipeline" extends="gitlab.Task">
+        <property name="scriptLocation" default="gitlab/pipeline.py" hidden="true"/>
+        <property name="project_id" category="input" required="true" label="Project ID"/>
+        <property name="ref" category="input" required="true" />
+        <property name="token" category="input" required="true" password="true"/>
+        <property name="variables" category="input" required="true" kind="map_string_string" />
+        <property name="pipeline_id" category="output" label="Pipeline ID"/>
+        <property name="status" category="output" />
+    </type>
+
     <type type="gitlab.Task" extends="xlrelease.PythonScript" virtual="true">
         <property name="scriptLocation" default="gitlab/Task.py" hidden="true"/>
         <property name="iconLocation" default="gitlab/gitlab.png" hidden="true"/>
@@ -40,7 +50,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <type type="gitlab.QueryMergeRequests" extends="gitlab.Task">
         <property name="project_id" category="input" required="true" label="Project ID"/>
         <property name="results_limit" category="input" kind="integer" required="true" label="Results Limit" default="100" description="Upper limit on the number of pull requests to return from the query."/>
-	<property name="sorting" category="input" kind="enum" required="true" label="Sorting" description="Approach for sorting query results" default="Creation Datetime Descending">
+        <property name="sorting" category="input" kind="enum" required="true" label="Sorting" description="Approach for sorting query results" default="Creation Datetime Descending">
             <enum-values>
                 <value>Creation Datetime Descending</value>
                 <value>Creation Datetime Ascending</value>
@@ -48,9 +58,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                 <value>Last Update Datetime Ascending</value>
             </enum-values>
         </property>
-	<property name="simple_view" category="input" kind="boolean" required="true" label="Simple View" description="If simple view is enabled, only the iid, URL, title, description, and basic state of the merge request are extracted." default="false"/>
-	<property name="source_branch" category="input" required="false" label="Source Branch" description="If a merge request source branch is provided, only matching merge requests will be returned.  For the value, provide a branch name, such as &quot;master&quot;."/>
-	<property name="target_branch" category="input" required="false" label="Target Branch" description="If a merge request target branch is provided, only matching merge requests will be returned.  For the value, provide a branch name, such as &quot;master&quot;."/>
+        <property name="simple_view" category="input" kind="boolean" required="true" label="Simple View" description="If simple view is enabled, only the iid, URL, title, description, and basic state of the merge request are extracted." default="false"/>
+        <property name="source_branch" category="input" required="false" label="Source Branch" description="If a merge request source branch is provided, only matching merge requests will be returned.  For the value, provide a branch name, such as &quot;master&quot;."/>
+        <property name="target_branch" category="input" required="false" label="Target Branch" description="If a merge request target branch is provided, only matching merge requests will be returned.  For the value, provide a branch name, such as &quot;master&quot;."/>
         <property name="milestone" category="input" required="false" label="Milestone" description="Filter results by milestone.  For the value, provide a specific milestone, the value &quot;Any&quot;, or the value &quot;None&quot;."/>
         <property name="state" category="input" kind="enum" required="true" default="all">
             <enum-values>

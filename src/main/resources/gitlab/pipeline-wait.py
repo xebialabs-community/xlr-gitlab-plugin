@@ -8,11 +8,25 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 from gitlab.Client import Client
+import sys
 
 client = Client.get_client()
-method = str(task.getTaskType()).lower().replace('.', '_')
-call = getattr(client, method)
-response = call(locals())
+response = client.gitlab_pipeline_status(locals())
 if response is not None:
     for key, value in response.items():
         locals()[key] = value
+
+task.setStatusLine("Pipeline #{0}:{1} ".format(response["pipeline_id"], response["status"]))
+
+if response["status"] == "running":
+    task.schedule("gitlab/pipeline-wait.py")
+
+if response["status"] == "failed":
+    print "Pipeline #{0}: {1}".format(response["pipeline_id"], "Failed!")
+    status = "failed"
+    sys.exit(1)
+
+if response["status"] == "success":
+    print "Pipeline #{0}: {1}".format(response["pipeline_id"], "Success!")
+    status = "success"
+
