@@ -39,6 +39,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
     <type type="gitlab.QueryMergeRequests" extends="gitlab.Task">
         <property name="project_id" category="input" required="true" label="Project ID"/>
+        <property name="results_limit" category="input" kind="integer" required="true" label="Results Limit" default="100" description="Upper limit on the number of pull requests to return from the query."/>
+	<property name="sorting" category="input" kind="enum" required="true" label="Sorting" description="Approach for sorting query results" default="Creation Datetime Descending">
+            <enum-values>
+                <value>Creation Datetime Descending</value>
+                <value>Creation Datetime Ascending</value>
+                <value>Last Update Datetime Descending</value>
+                <value>Last Update Datetime Ascending</value>
+            </enum-values>
+        </property>
+	<property name="simple_view" category="input" kind="boolean" required="true" label="Simple View" description="If simple view is enabled, only the iid, URL, title, description, and basic state of the merge request are extracted." default="false"/>
+	<property name="source_branch" category="input" required="false" label="Source Branch" description="If a merge request source branch is provided, only matching merge requests will be returned.  For the value, provide a branch name, such as &quot;master&quot;."/>
+	<property name="target_branch" category="input" required="false" label="Target Branch" description="If a merge request target branch is provided, only matching merge requests will be returned.  For the value, provide a branch name, such as &quot;master&quot;."/>
         <property name="milestone" category="input" required="false" label="Milestone" description="Filter results by milestone.  For the value, provide a specific milestone, the value &quot;Any&quot;, or the value &quot;None&quot;."/>
         <property name="state" category="input" kind="enum" required="true" default="all">
             <enum-values>

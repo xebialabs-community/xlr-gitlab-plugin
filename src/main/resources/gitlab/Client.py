@@ -96,12 +96,37 @@ class Client(object):
 
     @staticmethod
     def gitlab_querymergerequests(variables):
-        endpoint = Client.build_projects_endpoint("/%s/merge_requests?per_page=100&state=%s" % (variables['project_id'], variables['state']), variables)
+        endpoint = Client.build_projects_endpoint("/%s/merge_requests?state=%s" % (variables['project_id'], variables['state']), variables)
+        # Sorting and filtering merge request results
+        if variables['sorting'] == 'Creation Datetime Descending':
+            endpoint = "%s&order_by=created_at&sort=desc" % endpoint
+        if variables['sorting'] == 'Creation Datetime Ascending':
+            endpoint = "%s&order_by=created_at&sort=asc" % endpoint
+        if variables['sorting'] == 'Last Update Datetime Descending':
+            endpoint = "%s&order_by=updated_at&sort=desc" % endpoint
+        if variables['sorting'] == 'Last Update Datetime Ascending':
+            endpoint = "%s&order_by=updated_at&sort=asc" % endpoint
+        if variables['simple_view']:
+            endpoint = "%s&view=simple" % endpoint
+        if variables['source_branch'] is not None:
+            endpoint = "%s&source_branch=%s" % (endpoint, variables['source_branch'])
+        if variables['target_branch'] is not None:
+            endpoint = "%s&target_branch=%s" % (endpoint, variables['target_branch'])
         if variables['milestone'] is not None:
             endpoint = "%s&milestone=%s" % (endpoint, variables['milestone'])
-        response = Client.get_request(variables).get(endpoint)
-        Client.handle_response(response)
-        return {"merge_requests" : "%s" % response.response}
+        # Pagination
+        merge_requests = []
+        # Calculate page sizes using max 100 results per page (GitLab limit) and the user-specified results_limit
+        result_set_sizes = [min(variables['results_limit']-i,100) for i in range(0, variables['results_limit'], 100)]
+        for page_num, result_set_size in enumerate(result_set_sizes, 1):
+            endpoint_page = "%s&per_page=100&page=%s" % (endpoint, page_num)
+            response = Client.get_request(variables).get(endpoint_page)
+            merge_requests_set = Client.handle_response(response)
+            if merge_requests_set == []:  # no more results to pull
+                break
+            else:  # pull results based on expected results_limit count for that page
+                merge_requests += merge_requests_set[0:result_set_size]
+        return {"merge_requests" : "%s" % merge_requests}
 
     @staticmethod
     def gitlab_createtag(variables):
