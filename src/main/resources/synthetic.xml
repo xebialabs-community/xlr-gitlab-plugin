@@ -45,6 +45,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                 <value label="Opened">opened</value>
                 <value label="Closed">closed</value>
                 <value label="Merged">merged</value>
+                <value label="Locked">locked</value>
                 <value label="All">all</value>
             </enum-values>
         </property>
