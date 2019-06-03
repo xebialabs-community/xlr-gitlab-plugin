@@ -126,7 +126,7 @@ class Client(object):
                 break
             else:  # pull results based on expected results_limit count for that page
                 merge_requests += merge_requests_set[0:result_set_size]
-        return {"merge_requests" : "%s" % merge_requests}
+        return {"merge_requests" : "%s" % json.dumps(merge_requests)}
 
     @staticmethod
     def gitlab_createtag(variables):
