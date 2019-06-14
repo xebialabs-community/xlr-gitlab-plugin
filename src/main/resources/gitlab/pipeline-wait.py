@@ -18,6 +18,7 @@ if response is not None:
 
 task.setStatusLine("Pipeline #{0}:{1} ".format(response["pipeline_id"], response["status"]))
 pipeline_status = response["status"]
+pipeline_web_url = response["web_url"]
 
 if response["status"] == "pending":
     task.schedule("gitlab/pipeline-wait.py")
