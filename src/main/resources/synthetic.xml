@@ -21,7 +21,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="token" category="input" required="true" password="true"/>
         <property name="variables" category="input" required="true" kind="map_string_string" />
         <property name="pipeline_id" category="output" label="Pipeline ID"/>
-        <property name="status" category="output" />
+        <property name="pipeline_status" category="output" />
     </type>
 
     <type type="gitlab.Task" extends="xlrelease.PythonScript" virtual="true">
