@@ -10,6 +10,7 @@
 from gitlab.Client import Client
 import sys
 
+# variables = locals()
 client = Client.get_client()
 response = client.gitlab_triggerpipeline(locals())
 if response is not None:
