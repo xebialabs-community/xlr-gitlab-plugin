@@ -161,7 +161,7 @@ class Client(object):
     def gitlab_triggerpipeline(variables):
         endpoint = "/api/v4/projects/{0}/ref/{1}/trigger/pipeline?token={2}".format(variables['project_id'],
                                                                                     variables['ref'],
-                                                                                    variables['token'])
+                                                                                        variables['token'])
         pipeline_variable = variables['variables']
         if len(pipeline_variable) > 0:
             entries = []
