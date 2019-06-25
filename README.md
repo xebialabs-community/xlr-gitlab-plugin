@@ -23,7 +23,11 @@ The xlr-gitlab-plugin provides the following XL Release functionality:
   * Accept a merge request
   * Create a tag
   * Create a branch
-  
+  * Trigger a pipeline
+
+### Triggers ###
+  * Commit Trigger
+
 ### Webhook (Configured in Gitlab) ###
   * Commit Webhook
   * Merge Pull Request Webhook
@@ -95,6 +99,9 @@ The xlr-gitlab-plugin provides the following XL Release functionality:
   *  Tag Name : The name of the tag.
   *  Tag Message : An optional description for the tag.
   *  Commit ID : The ID of the commit used by the newly created tag (useful when specifying a branch or tag name as Ref).
+
+#### Trigger Pipeline
+![Trigger Pipeline](images/trigger_pipeline.png)
 
 ## Webhooks ##
 
