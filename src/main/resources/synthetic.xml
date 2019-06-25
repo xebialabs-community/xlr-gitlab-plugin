@@ -95,6 +95,24 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="commit_id" category="output" label="Commit Source" description="Commit ID used to generate the new branch"/>
     </type>
 
+    <type type="gitlab.CommitTrigger" extends="xlrelease.ReleaseTrigger"
+          description="Listens to a GitLab repository for fresh code commit ">
+        <property name="scriptLocation" default="gitlab/CommitTrigger.py" hidden="true"/>
+        <!-- repository -->
+        <property name="gitlab_server" category="Repository" referenced-type="gitlab.Server" kind="ci"
+                  description="Gitlab server to poll"/>
+        <property name="api_key" label="API Key" category="Repository" default="" required="false"
+                  description="Optional API token to override the global server configuration"/>
+        <property name="project_id" label="Project ID" kind="integer" category="Repository" required="true"
+                  description="GitLab project to monitor - should be an integer"/>
+        <property name="branchName" kind="string" category="Repository" required="false"
+                  description="Optionally, specify a branch name if only listening for commits on a single branch"/>
+
+        <!-- output variables -->
+        <property name="commitId" category="variables" required="false" description="Id of the commit."/>
+        <property name="branch" category="variables" required="false" description="Branch where the commit occurred."/>
+    </type>
+
     <!-- Tile Configuration -->
     <type type="gitlab.MergeRequestsTile" label="GitLab Merge Requests Tile" extends="xlrelease.Tile">
         <property name="uri" hidden="true" default="gitlab/MergeRequestsTile/gitlab-merge-requests-tile-summary-view.html"/>

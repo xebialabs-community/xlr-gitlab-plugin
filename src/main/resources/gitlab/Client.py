@@ -180,3 +180,23 @@ class Client(object):
                   "web_url": data.get('web_url')}
         # print "* gitlab_pipeline_status.status: {0}".format(status)
         return status
+
+    @staticmethod
+    def gitlab_branch_statuses(variables):
+        endpoint = "/api/v4/projects/{0}/repository/branches?private_token={1}".format(
+            variables['project_id'],
+            Client.get_gitlab_api_key(variables)
+        )
+        branches = Client.handle_response(Client.get_request(variables).get(endpoint))
+        # build a map of the commit ids for each branch
+        latest_commits = {}
+        for branch in branches:
+            if not variables['branchName']:
+                branch_id = branch["name"]
+                last_commit = branch["commit"]["id"]
+                latest_commits[branch_id] = last_commit
+            elif branch["name"] == variables['branchName']:
+                branch_id = branch["name"]
+                last_commit = branch["commit"]["id"]
+                latest_commits[branch_id] = last_commit
+        return latest_commits
