@@ -17,16 +17,20 @@ if response is not None:
         locals()[key] = value
 
 task.setStatusLine("Pipeline #{0}:{1} ".format(response["pipeline_id"], response["status"]))
+pipeline_status = response["status"]
+pipeline_web_url = response["web_url"]
+
+if response["status"] == "pending":
+    task.schedule("gitlab/pipeline-wait.py")
 
 if response["status"] == "running":
     task.schedule("gitlab/pipeline-wait.py")
 
 if response["status"] == "failed":
     print "Pipeline #{0}: {1}".format(response["pipeline_id"], "Failed!")
-    status = "failed"
+    pipeline_status = "failed"
     sys.exit(1)
 
 if response["status"] == "success":
     print "Pipeline #{0}: {1}".format(response["pipeline_id"], "Success!")
-    status = "success"
-
+    pipeline_status = "success"

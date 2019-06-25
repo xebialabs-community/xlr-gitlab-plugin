@@ -105,7 +105,8 @@ class Client(object):
 
     @staticmethod
     def gitlab_querymergerequests(variables):
-        endpoint = Client.build_projects_endpoint("/%s/merge_requests?state=%s" % (variables['project_id'], variables['state']), variables)
+        endpoint = Client.build_projects_endpoint(
+            "/%s/merge_requests?state=%s" % (variables['project_id'], variables['state']), variables)
         # Sorting and filtering merge request results
         if variables['sorting'] == 'Creation Datetime Descending':
             endpoint = "%s&order_by=created_at&sort=desc" % endpoint
@@ -126,7 +127,7 @@ class Client(object):
         # Pagination
         merge_requests = []
         # Calculate page sizes using max 100 results per page (GitLab limit) and the user-specified results_limit
-        result_set_sizes = [min(variables['results_limit']-i,100) for i in range(0, variables['results_limit'], 100)]
+        result_set_sizes = [min(variables['results_limit'] - i, 100) for i in range(0, variables['results_limit'], 100)]
         for page_num, result_set_size in enumerate(result_set_sizes, 1):
             endpoint_page = "%s&per_page=100&page=%s" % (endpoint, page_num)
             response = Client.get_request(variables).get(endpoint_page)
@@ -135,7 +136,7 @@ class Client(object):
                 break
             else:  # pull results based on expected results_limit count for that page
                 merge_requests += merge_requests_set[0:result_set_size]
-        return {"merge_requests" : "%s" % json.dumps(merge_requests)}
+        return {"merge_requests": "%s" % json.dumps(merge_requests)}
 
     @staticmethod
     def gitlab_createtag(variables):
@@ -145,7 +146,7 @@ class Client(object):
             Client.build_projects_endpoint("/%s/repository/tags?" % variables['project_id'], variables),
             content,
             contentType=''))
-        return {"commit_id" : "%s" % data['commit']['id']}
+        return {"commit_id": "%s" % data['commit']['id']}
 
     @staticmethod
     def gitlab_createbranch(variables):
@@ -160,8 +161,16 @@ class Client(object):
     def gitlab_triggerpipeline(variables):
         endpoint = "/api/v4/projects/{0}/ref/{1}/trigger/pipeline?token={2}".format(variables['project_id'],
                                                                                     variables['ref'],
-                                                                                    variables['token'])
-        # print "* gitlab_triggerpipeline.endpoint: {0}".format(endpoint)
+                                                                                        variables['token'])
+        pipeline_variable = variables['variables']
+        if len(pipeline_variable) > 0:
+            entries = []
+            for key, value in pipeline_variable.iteritems():
+                entries.append("variables[{0}]={1}".format(key, value))
+            variables_parameters = "&".join(entries)
+            endpoint = endpoint + "&" + variables_parameters
+
+        print "* gitlab_triggerpipeline.endpoint: {0}".format(endpoint)
         data = Client.handle_response(Client.get_request(variables).post(endpoint, '', contentType=''))
         print "[Pipeline #{0}]({1})".format(data["id"], data["web_url"])
         status = {"pipeline_id": "%s" % data['id'], "status": "%s" % data['status']}
