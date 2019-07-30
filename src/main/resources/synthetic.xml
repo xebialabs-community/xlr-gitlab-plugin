@@ -96,6 +96,24 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="commit_id" category="output" label="Commit Source" description="Commit ID used to generate the new branch"/>
     </type>
 
+    <type type="gitlab.CreateProject" extends="gitlab.Task">
+        <property name="project_name" category="input" label="Project Name" required="true"/>
+        <property name="path" category="input" required="true"/>
+        <property name="namespace" category="input" required="false"
+        description="Namespace ID - will default to the configuration user namespace if not provided"/>
+        <property name="description" kind="string" size="large" category="input" required="false"/>
+        <property name="import_url" category="input" label="Import URL" required="false"
+        description="Note: If your HTTP repository is not publicly accessible, add authentication information to the URL (e.g. https://username:password@gitlab.company.com/group/project.git)"/>
+        <property name="visibility" category="input" kind="enum" required="true" description="Project visibility">
+            <enum-values>
+                <value label="Public">public</value>
+                <value label="Internal">internal</value>
+                <value label="Private">private</value>
+            </enum-values>
+        </property>
+        <property name="project_id" category="output" label="Project ID"/>
+    </type>
+
     <type type="gitlab.CommitTrigger" extends="xlrelease.ReleaseTrigger"
           description="Listens to a GitLab repository for fresh code commit ">
         <property name="scriptLocation" default="gitlab/CommitTrigger.py" hidden="true"/>

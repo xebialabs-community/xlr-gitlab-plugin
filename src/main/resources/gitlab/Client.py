@@ -209,3 +209,17 @@ class Client(object):
                 last_commit = branch["commit"]["id"]
                 latest_commits[branch_id] = last_commit
         return latest_commits
+
+    @staticmethod
+    def gitlab_createproject(variables):
+        proj_spec = {"name": variables['project_name'], "path": variables['path'], "visibility": variables['visibility']}
+        for optional_spec in ["namespace", "description", "import_url"]:
+            if optional_spec in variables.keys():
+                proj_spec[optional_spec] = variables[optional_spec]
+        content = Client.build_content(proj_spec)
+        endpoint = "/api/v4/projects?private_token={0}".format(Client.get_gitlab_api_key(variables))
+        data = Client.handle_response(Client.get_request(variables).post(
+            endpoint,
+            content,
+            contentType=''))
+        return {"project_id": "%s" % data['id']}
