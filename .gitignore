@@ -4,3 +4,4 @@ build/
 *.swp
 *.iml
 supervisord.*
+.project
