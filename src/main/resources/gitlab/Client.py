@@ -223,3 +223,23 @@ class Client(object):
             content,
             contentType=''))
         return {"project_id": "%s" % data['id']}
+
+    @staticmethod
+    def gitlab_querycommits(variables):
+        endpoint = "/api/v4/projects/{0}/repository/commits?private_token={1}".format(
+            variables['project_id'],
+            Client.get_gitlab_api_key(variables)
+        )
+        if variables['branch'] is not None:
+            endpoint += "&" + "ref_name=" + variables['branch']
+        data = Client.handle_response(Client.get_request(variables).get(endpoint))
+        return {"commits": "%s" % json.dumps(data)}
+
+    @staticmethod
+    def gitlab_querypipelines(variables):
+        endpoint = "/api/v4/projects/{0}/pipelines?private_token={1}".format(
+            variables['project_id'],
+            Client.get_gitlab_api_key(variables)
+        )
+        data = Client.handle_response(Client.get_request(variables).get(endpoint))
+        return {"pipelines": "%s" % json.dumps(data)}

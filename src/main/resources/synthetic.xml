@@ -114,6 +114,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="project_id" category="output" label="Project ID"/>
     </type>
 
+    <type type="gitlab.QueryCommits" extends="gitlab.Task">
+        <property name="project_id" category="input" required="true" label="Project ID"/>
+        <property name="branch" category="input" required="false" label="Branch Name" description="If not provided, the default branch will be used"/>
+        <property name="commits" category="output"/>
+    </type>
+
+    <type type="gitlab.QueryPipelines" extends="gitlab.Task">
+        <property name="project_id" category="input" required="true" label="Project ID"/>
+        <property name="pipelines" category="output"/>
+    </type>
+
     <type type="gitlab.CommitTrigger" extends="xlrelease.ReleaseTrigger"
           description="Listens to a GitLab repository for fresh code commit ">
         <property name="scriptLocation" default="gitlab/CommitTrigger.py" hidden="true"/>
@@ -130,6 +141,27 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <!-- output variables -->
         <property name="commitId" category="variables" required="false" description="Id of the commit."/>
         <property name="branch" category="variables" required="false" description="Branch where the commit occurred."/>
+    </type>
+
+    <!-- Tile Configuration -->
+    <type type="gitlab.CommitsTile" label="GitLab Commits Tile" extends="xlrelease.Tile">
+        <property name="uri" hidden="true" default="gitlab/CommitsTile/gitlab-commits-tile-summary-view.html"/>
+        <property name="detailsUri" hidden="true" default="gitlab/CommitsTile/gitlab-commits-tile-details-view.html" />
+        <property name="title" description="Tile title." default="GitLab Commits Summary"/>
+        <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci" />
+        <property name="api_key" category="input" required="false" label="API Key"/>
+        <property name="project_id" category="input" required="true" label="Project ID"/>
+        <property name="branch" category="input" required="false" label="Branch Name" description="If not provided, the default branch will be used"/>
+    </type>
+
+    <!-- Tile Configuration -->
+    <type type="gitlab.PipelinesTile" label="GitLab Pipelines Tile" extends="xlrelease.Tile">
+        <property name="uri" hidden="true" default="gitlab/PipelinesTile/gitlab-pipelines-tile-summary-view.html"/>
+        <property name="detailsUri" hidden="true" default="gitlab/CommitsTile/gitlab-pipelines-tile-details-view.html" />
+        <property name="title" description="Tile title." default="GitLab Pipelines Summary"/>
+        <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci" />
+        <property name="api_key" category="input" required="false" label="API Key"/>
+        <property name="project_id" category="input" required="true" label="Project ID"/>
     </type>
 
     <!-- Tile Configuration -->

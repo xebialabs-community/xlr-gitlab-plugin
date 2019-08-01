@@ -6,3 +6,5 @@ build/
 supervisord.*
 .project
 .settings/
+.classpath
+bin/
