@@ -7,7 +7,11 @@
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
-params = { 'url': configuration.url }
-response = HttpRequest(params).get("/api/v4/projects?private_token=%s" % configuration.api_key)
+params = {"url": configuration.url}
+response = HttpRequest(params).get(
+    "/api/v4/projects?private_token=%s" % configuration.api_key
+)
 if response.status != 200:
-    raise Exception("Failed to connect to GitLab Server. Status: %s" % response.getStatus())
+    raise Exception(
+        "Failed to connect to GitLab Server. Status: %s" % response.getStatus()
+    )

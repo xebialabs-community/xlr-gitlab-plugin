@@ -12,6 +12,7 @@ from gitlab.Client import Client
 
 import json
 
+
 def findNewCommit(oldCommitMap, newCommitMap):
     branch = ""
     commitId = ""
@@ -33,6 +34,7 @@ def findNewCommit(oldCommitMap, newCommitMap):
             break
 
     return branch, commitId
+
 
 if gitlab_server is None:
     raise Exception("No GitLab server provided.")

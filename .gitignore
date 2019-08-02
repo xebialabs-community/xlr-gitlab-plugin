@@ -8,3 +8,4 @@ supervisord.*
 .settings/
 .classpath
 bin/
+.venv/

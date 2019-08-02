@@ -10,7 +10,7 @@
 from gitlab.Client import Client
 
 client = Client.get_client()
-method = str(task.getTaskType()).lower().replace('.', '_')
+method = str(task.getTaskType()).lower().replace(".", "_")
 call = getattr(client, method)
 response = call(locals())
 if response is not None:
