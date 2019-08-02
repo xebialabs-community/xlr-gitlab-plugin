@@ -30,10 +30,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                 $("#commits").append(
                     '<tr>' +
                     '<td>' + commit.short_id + '</td>' +
-                    '<td>' + commit.authored_date + '</td>' +
-                    '<td>' + commit.author_name + '</td>' +
-                    '<td>' + commit.author_email + '</td>' +
-                    '<td>' + message  + '</td>' +
+                    '<td>' + commit.committed_date + '</td>' +
+                    '<td>' + commit.committer_name +
+                    ' (<a href="mailto:' + commit.committer_email + '">' + commit.committer_email + '</a>)</td>' +
+                    '<td>' + message + '</td>' +
                     '</tr>'
                 );
             })
@@ -46,10 +46,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <thead>
     <tr>
         <th>Commit ID</th>
-        <th>Datetime</th>
-        <th>Author</th>
-        <th>Email</th>
-        <th>Description</th>
+        <th>Date</th>
+        <th>Committer</th>
+        <th>Message</th>
     </tr>
     </thead>
     <tbody id="commits">
