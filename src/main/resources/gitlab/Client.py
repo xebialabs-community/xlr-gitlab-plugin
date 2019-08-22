@@ -232,8 +232,19 @@ class Client(object):
         )
         if variables['branch'] is not None:
             endpoint += "&" + "ref_name=" + variables['branch']
-        data = Client.handle_response(Client.get_request(variables).get(endpoint))
-        return {"commits": "%s" % json.dumps(data)}
+        # Pagination
+        commits = []
+        # Calculate page sizes using max 100 results per page (GitLab limit) and the user-specified results_limit
+        result_set_sizes = [min(variables['results_limit'] - i, 100) for i in range(0, variables['results_limit'], 100)]
+        for page_num, result_set_size in enumerate(result_set_sizes, 1):
+            endpoint_page = "%s&per_page=100&page=%s" % (endpoint, page_num)
+            response = Client.get_request(variables).get(endpoint_page)
+            commits_set = Client.handle_response(response)
+            if commits_set == []:  # no more results to pull
+                break
+            else:  # pull results based on expected results_limit count for that page
+                commits += commits_set[0:result_set_size]
+        return {"commits": "%s" % json.dumps(commits)}
 
     @staticmethod
     def gitlab_querypipelines(variables):

@@ -144,6 +144,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <type type="gitlab.QueryCommits" extends="gitlab.Task">
         <property name="project_id" category="input" required="true" label="Project ID"/>
         <property name="branch" category="input" required="false" label="Branch Name" description="If not provided, the default branch will be used"/>
+        <property name="results_limit" category="input" kind="integer" required="true" label="Results Limit" default="100" description="Upper limit on the number of commits to return from the query."/>
         <property name="commits" category="output"/>
     </type>
 
@@ -180,6 +181,20 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="api_key" category="input" required="false" label="API Key"/>
         <property name="project_id" category="input" required="true" label="Project ID"/>
         <property name="branch" category="input" required="false" label="Branch Name" description="If not provided, the default branch will be used"/>
+        <property name="results_limit" category="input" kind="integer" required="true" label="Results Limit" default="100" description="Upper limit on the number of pull requests to return from the query."/>
+    </type>
+
+    <!-- Tile Configuration -->
+    <type type="gitlab.ContributionsTile" label="GitLab Contributions Tile" extends="xlrelease.Tile" description="Display authors and committers for the latest commits">
+        <property default="release,folder,global" hidden="true" name="supportedScopes" kind="list_of_string"/>
+        <property name="uri" hidden="true" default="gitlab/ContributionsTile/gitlab-contributions-tile-summary-view.html"/>
+        <property name="detailsUri" hidden="true" default="gitlab/ContributionsTile/gitlab-contributions-tile-details-view.html" />
+        <property name="title" description="Tile title." default="GitLab Contributions Summary"/>
+        <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci" />
+        <property name="api_key" category="input" required="false" label="API Key"/>
+        <property name="project_id" category="input" required="true" label="Project ID"/>
+        <property name="branch" category="input" required="false" label="Branch Name" description="If not provided, the default branch will be used"/>
+        <property name="results_limit" category="input" kind="integer" required="true" label="Results Limit" default="100" description="Upper limit on the number of pull requests to return from the query."/>
     </type>
 
     <!-- Tile Configuration -->
