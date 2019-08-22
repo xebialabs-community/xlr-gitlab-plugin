@@ -114,6 +114,33 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="project_id" category="output" label="Project ID"/>
     </type>
 
+    <type type="gitlab.CreateProjectWebhook" extends="gitlab.Task">
+        <property name="project_id" category="input" required="true" label="Project ID"/>
+        <property name="url" category="input" required="true" label="URL" description="The hook URL"/>
+        <property name="push_events" category="input" kind="boolean" required="false" label="Push Events"
+        description="Trigger hook on push events"/>
+        <property name="issues_events" category="input" kind="boolean" required="false" label="Issues Events"
+        description="Trigger hook on issues events"/>
+        <property name="confidential_issues_events" category="input" kind="boolean" required="false" label="Confidential Issues Events"
+        description="Trigger hook on confidential issues events"/>
+        <property name="merge_requests_events" category="input" kind="boolean" required="false" label="Merge Requests Events"
+        description="Trigger hook on merge requests events"/>
+        <property name="tag_push_events" category="input" kind="boolean" required="false" label="Tag Push Events"
+        description="Trigger hook on tag push events"/>
+        <property name="note_events" category="input" kind="boolean" required="false" label="Note Events"
+        description="Trigger hook on note events"/>
+        <property name="job_events" category="input" kind="boolean" required="false" label="Job Events"
+        description="Trigger hook on job events"/>
+        <property name="pipeline_events" category="input" kind="boolean" required="false" label="Pipeline Events"
+        description="Trigger hook on pipeline events"/>
+        <property name="wiki_page_events" category="input" kind="boolean" required="false" label="Wiki Page Events"
+        description="Trigger hook on wiki events"/>
+        <property name="enable_ssl_verification" category="input" kind="boolean" required="true" default="true" label="Verify SSL"
+        description="Do SSL verification when triggering the hook"/>
+        <property name="token" category="input" required="false" description="Secret token to validate received payloads"/>
+        <property name="hook_id" category="output" label="Hook ID"/>
+    </type>
+
     <type type="gitlab.QueryCommits" extends="gitlab.Task">
         <property name="project_id" category="input" required="true" label="Project ID"/>
         <property name="branch" category="input" required="false" label="Branch Name" description="If not provided, the default branch will be used"/>
@@ -144,7 +171,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     </type>
 
     <!-- Tile Configuration -->
-    <type type="gitlab.CommitsTile" label="GitLab Commits Tile" extends="xlrelease.Tile">
+    <type type="gitlab.CommitsTile" label="GitLab Commits Tile" extends="xlrelease.Tile" description="Display a list of the latest commits to a branch">
+        <property default="release,folder,global" hidden="true" name="supportedScopes" kind="list_of_string"/>
         <property name="uri" hidden="true" default="gitlab/CommitsTile/gitlab-commits-tile-summary-view.html"/>
         <property name="detailsUri" hidden="true" default="gitlab/CommitsTile/gitlab-commits-tile-details-view.html" />
         <property name="title" description="Tile title." default="GitLab Commits Summary"/>
@@ -155,7 +183,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     </type>
 
     <!-- Tile Configuration -->
-    <type type="gitlab.PipelinesTile" label="GitLab Pipelines Tile" extends="xlrelease.Tile">
+    <type type="gitlab.PipelinesTile" label="GitLab Pipelines Tile" extends="xlrelease.Tile" description="Display a list of the latest pipeline executions, including status information and a direct link">
+        <property default="release,folder,global" hidden="true" name="supportedScopes" kind="list_of_string"/>
         <property name="uri" hidden="true" default="gitlab/PipelinesTile/gitlab-pipelines-tile-summary-view.html"/>
         <property name="detailsUri" hidden="true" default="gitlab/PipelinesTile/gitlab-pipelines-tile-details-view.html" />
         <property name="title" description="Tile title." default="GitLab Pipelines Summary"/>
@@ -165,7 +194,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     </type>
 
     <!-- Tile Configuration -->
-    <type type="gitlab.MergeRequestsTile" label="GitLab Merge Requests Tile" extends="xlrelease.Tile">
+    <type type="gitlab.MergeRequestsTile" label="GitLab Merge Requests Tile" extends="xlrelease.Tile" description="Display the breakdown of merge request statuses">
+        <property default="release,folder,global" hidden="true" name="supportedScopes" kind="list_of_string"/>
         <property name="uri" hidden="true" default="gitlab/MergeRequestsTile/gitlab-merge-requests-tile-summary-view.html"/>
         <property name="detailsUri" hidden="true" default="gitlab/MergeRequestsTile/gitlab-merge-requests-tile-details-view.html" />
         <property name="title" description="Tile title." default="GitLab Merge Requests Summary"/>

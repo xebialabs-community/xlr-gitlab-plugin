@@ -243,3 +243,21 @@ class Client(object):
         )
         data = Client.handle_response(Client.get_request(variables).get(endpoint))
         return {"pipelines": "%s" % json.dumps(data)}
+
+    @staticmethod
+    def gitlab_createprojectwebhook(variables):
+        content_params = [
+            "url", "push_events", "issues_events", "confidential_issues_events", "merge_requests_events",
+            "tag_push_events", "note_events", "job_events", "pipeline_events", "wiki_page_events",
+            "enable_ssl_verification", "token"
+        ]
+        webhook = {}
+        for var_key in variables.keys():
+            if var_key in content_params:
+                webhook[var_key] = variables[var_key]
+        content = Client.build_content(webhook)
+        data = Client.handle_response(Client.get_request(variables).post(
+            Client.build_projects_endpoint("/%s/hooks?" % variables['project_id'], variables),
+            content,
+            contentType=''))
+        return {"hook_id": "%s" % data['id']}
