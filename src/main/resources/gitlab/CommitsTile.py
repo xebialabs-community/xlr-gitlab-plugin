@@ -7,12 +7,8 @@
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
+
+import json
 from gitlab.Client import Client
 
-client = Client.get_client()
-method = str(task.getTaskType()).lower().replace(".", "_")
-call = getattr(client, method)
-response = call(locals())
-if response is not None:
-    for key, value in response.items():
-        locals()[key] = value
+data = {"commits": json.loads(Client.gitlab_querycommits(locals())["commits"])}

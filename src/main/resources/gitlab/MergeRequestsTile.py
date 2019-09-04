@@ -12,5 +12,7 @@ import json
 from gitlab.Client import Client
 
 data = {
-    "merge_requests": json.loads(Client.gitlab_querymergerequests(locals())['merge_requests'])
+    "merge_requests": json.loads(
+        Client.gitlab_querymergerequests(locals())["merge_requests"]
+    )
 }

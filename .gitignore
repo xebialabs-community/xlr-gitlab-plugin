@@ -4,3 +4,8 @@ build/
 *.swp
 *.iml
 supervisord.*
+.project
+.settings/
+.classpath
+bin/
+.venv/

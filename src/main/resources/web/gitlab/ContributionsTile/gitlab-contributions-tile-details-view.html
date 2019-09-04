@@ -8,11 +8,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 -->
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <!-- Bootstrap CSS dependency -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="gitlab-merge-requests-tile.css" type="text/css">
+    <link rel="stylesheet" href="gitlab-contributions-tile.css" type="text/css">
     <script
             src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -23,18 +23,23 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <script>
     window.addEventListener("xlrelease.load", function () {
         window.xlrelease.queryTileData(function (response) {
-            var merge_requests = response.data.data.merge_requests;
-            merge_requests.forEach(function (mergeData) {
-                $("#merge_requests").append(
+            var commits = response.data.data.commits;
+            commits.forEach(function (commit) {
+                if(commit.message.length > 64) {
+                    var message = commit.message.substring(0, 61).concat('...');
+                } else {
+                    var message = commit.message;
+                }
+                $("#commits").append(
                     '<tr>' +
-                    '<td><a href="' + mergeData.web_url + '" target="_blank_">' + mergeData.title + '</a></td>' +
-                    '<td>' + mergeData.id + '</td>' +
-                    '<td>' + mergeData.state + '</td>' +
-                    '<td>' + mergeData.author.name + '</td>' +
-                    '<td>' + mergeData.source_branch + '</td>' +
-                    '<td>' + mergeData.target_branch + '</td>' +
-                    '<td>' + mergeData.source_project_id + '</td>' +
-                    '<td>' + mergeData.target_project_id + '</td>' +
+                    '<td>' + commit.short_id + '</td>' +
+                    '<td>' + commit.authored_date + '</td>' +
+                    '<td>' + commit.author_name +
+                    ' (<a href="mailto:' + commit.author_email + '">' + commit.author_email + '</a>)</td>' +
+                    '<td>' + commit.committed_date + '</td>' +
+                    '<td>' + commit.committer_name +
+                    ' (<a href="mailto:' + commit.committer_email + '">' + commit.committer_email + '</a>)</td>' +
+                    '<td>' + message + '</td>' +
                     '</tr>'
                 );
             })
@@ -45,17 +50,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <table class="table table-rounded table-striped">
     <thead>
     <tr>
-        <th>Merge Title</th>
-        <th>ID</th>
-        <th>State</th>
+        <th>Commit&nbsp;ID</th>
+        <th>Authored Date</th>
         <th>Author</th>
-        <th>Source Branch</th>
-        <th>Target Branch</th>
-        <th>Source Project ID</th>
-        <th>Target Project ID</th>
+        <th>Committed Date</th>
+        <th>Committer</th>
+        <th>Message</th>
     </tr>
     </thead>
-    <tbody id="merge_requests">
+    <tbody id="commits">
     </tbody>
 </table>
 </body>

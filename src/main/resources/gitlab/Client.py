@@ -209,3 +209,66 @@ class Client(object):
                 last_commit = branch["commit"]["id"]
                 latest_commits[branch_id] = last_commit
         return latest_commits
+
+    @staticmethod
+    def gitlab_createproject(variables):
+        proj_spec = {"name": variables['project_name'], "path": variables['path'], "visibility": variables['visibility']}
+        for optional_spec in ["namespace", "description", "import_url"]:
+            if optional_spec in variables.keys():
+                proj_spec[optional_spec] = variables[optional_spec]
+        content = Client.build_content(proj_spec)
+        endpoint = "/api/v4/projects?private_token={0}".format(Client.get_gitlab_api_key(variables))
+        data = Client.handle_response(Client.get_request(variables).post(
+            endpoint,
+            content,
+            contentType=''))
+        return {"project_id": "%s" % data['id']}
+
+    @staticmethod
+    def gitlab_querycommits(variables):
+        endpoint = "/api/v4/projects/{0}/repository/commits?private_token={1}".format(
+            variables['project_id'],
+            Client.get_gitlab_api_key(variables)
+        )
+        if variables['branch'] is not None:
+            endpoint += "&" + "ref_name=" + variables['branch']
+        # Pagination
+        commits = []
+        # Calculate page sizes using max 100 results per page (GitLab limit) and the user-specified results_limit
+        result_set_sizes = [min(variables['results_limit'] - i, 100) for i in range(0, variables['results_limit'], 100)]
+        for page_num, result_set_size in enumerate(result_set_sizes, 1):
+            endpoint_page = "%s&per_page=100&page=%s" % (endpoint, page_num)
+            response = Client.get_request(variables).get(endpoint_page)
+            commits_set = Client.handle_response(response)
+            if commits_set == []:  # no more results to pull
+                break
+            else:  # pull results based on expected results_limit count for that page
+                commits += commits_set[0:result_set_size]
+        return {"commits": "%s" % json.dumps(commits)}
+
+    @staticmethod
+    def gitlab_querypipelines(variables):
+        endpoint = "/api/v4/projects/{0}/pipelines?private_token={1}".format(
+            variables['project_id'],
+            Client.get_gitlab_api_key(variables)
+        )
+        data = Client.handle_response(Client.get_request(variables).get(endpoint))
+        return {"pipelines": "%s" % json.dumps(data)}
+
+    @staticmethod
+    def gitlab_createprojectwebhook(variables):
+        content_params = [
+            "url", "push_events", "issues_events", "confidential_issues_events", "merge_requests_events",
+            "tag_push_events", "note_events", "job_events", "pipeline_events", "wiki_page_events",
+            "enable_ssl_verification", "token"
+        ]
+        webhook = {}
+        for var_key in variables.keys():
+            if var_key in content_params:
+                webhook[var_key] = variables[var_key]
+        content = Client.build_content(webhook)
+        data = Client.handle_response(Client.get_request(variables).post(
+            Client.build_projects_endpoint("/%s/hooks?" % variables['project_id'], variables),
+            content,
+            contentType=''))
+        return {"hook_id": "%s" % data['id']}
