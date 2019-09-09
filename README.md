@@ -8,15 +8,15 @@
 [xlr-gitlab-plugin-license-url]: https://opensource.org/licenses/MIT
 [xlr-gitlab-plugin-downloads-image]: https://img.shields.io/github/downloads/xebialabs-community/xlr-gitlab-plugin/total.svg
 
-# Preface #
+# Preface
 This document describes the functionality provided by the xlr-gitlab-plugin.
 
 Please see the [XL Release Documentation](https://docs.xebialabs.com/xl-release/) for background information on XL Release and release concepts.
 
-# Overview #
+# Overview
 The xlr-gitlab-plugin provides the following XL Release functionality:
 
-### Tasks ###
+### Tasks
   * Query for projects
   * Query for merge requests
   * Create a merge request
@@ -25,14 +25,14 @@ The xlr-gitlab-plugin provides the following XL Release functionality:
   * Create a branch
   * Trigger a pipeline
 
-### Triggers ###
+### Triggers
   * Commit Trigger
 
-### Webhook (Configured in Gitlab) ###
+### Webhook (Configured in Gitlab)
   * Commit Webhook
   * Merge Pull Request Webhook
 
-## Shared Configuration ##
+## Shared Configuration
 #### GitLab Server
 ![Server Configuration](images/shared_config.png)
 
@@ -40,7 +40,7 @@ The xlr-gitlab-plugin provides the following XL Release functionality:
   * Url : URL for GitLab server.
   * API Key : API key to use (configured in GitLab).
 
-## Tasks ##
+## Tasks
 #### Create Merge Request
 ![Create Merge Request](images/create_merge_request.png)
 
@@ -103,9 +103,9 @@ The xlr-gitlab-plugin provides the following XL Release functionality:
 #### Trigger Pipeline
 ![Trigger Pipeline](images/trigger_pipeline.png)
 
-## Webhooks ##
+## Webhooks
 
-### Code Commit/Push Webhook ###
+### Code Commit/Push Webhook
 
 ##### Gitlab Webhook Configuration
 
@@ -116,35 +116,40 @@ http://username:password@xlrserver:port/api/extension/gitlab/commit_webhook?temp
 
 ![Gitlab Webhook Configuration](images/commit_webhook_configure.png)
 
-##### Release Summary view in XL Release  #####
+##### Release Summary view in XL Release
 ![Release Summary view in XL Release](images/commit_webhook_release.png)
 
-##### Release Variables created #####
+##### Release Variables created
 ![Release Variables created](images/commit_webhook_variables.png)
 
 
-### Merge Pull Request Webhook ###
+### Merge Pull Request Webhook
 
-##### Gitlab Webhook Configuration #####
+##### Gitlab Webhook Configuration
 ```
 http://username:password@xlrserver:port/api/extension/gitlab/pr_webhook?template=<templateName/prefix> 
 ```
 
 ![Gitlab Webhook Configuration](images/pr_webhook_configure.png)
 
-##### Release Summary view in XL Release  #####
+##### Release Summary view in XL Release
 ![Release Summary view in XL Release](images/pr_webhook_release.png)
 
-##### Release Variables created #####
+##### Release Variables created
 ![Release Variables created](images/pr_webhook_variables.png)
 
 
-## Dashboard Tiles ##
+## Dashboard Tiles
 
-#### Merge Requests
+Dashboard tiles are included in this plugin, to visualize commit, merge request, and pipelines information.  These tiles use the existing XL Release GitLab server configuration/connection and can be configured using the (usual dashboard setup approach)[https://docs.xebialabs.com/v.9.0/xl-release/get-started?subject=dashboards].  These dashboard titles are available for all dashboard scopes - release, folder, and global.
 
-##### Tile View
-![Merge Requests Tile Small](images/merge_requests_tile_small.png)
+## Contributing
 
-##### Expanded View
-![Merge Requests Tile Large](images/merge_requests_tile_large.png)
+Please review the contributing guidelines for _xebialabs-community_ at [http://xebialabs-community.github.io/](http://xebialabs-community.github.io/)
+
+## License
+
+This community plugin is licensed under the [MIT license][xlr-gitlab-plugin-license-url].
+
+See license in [LICENSE.md](LICENSE.md)
+
