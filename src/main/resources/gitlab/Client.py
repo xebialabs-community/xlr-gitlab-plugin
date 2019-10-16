@@ -211,6 +211,16 @@ class Client(object):
         return latest_commits
 
     @staticmethod
+    def gitlab_tag_statuses(variables):
+        endpoint = "/api/v4/projects/{0}/repository/tags?private_token={1}&order_by=updated&sort=asc".format(
+            variables['project_id'],
+            Client.get_gitlab_api_key(variables)
+        )
+        if variables['search'] not in [None, ""]:
+            endpoint += "&search={0}".format(variables['search'])
+        return Client.handle_response(Client.get_request(variables).get(endpoint))
+
+    @staticmethod
     def gitlab_createproject(variables):
         proj_spec = {"name": variables['project_name'], "path": variables['path'], "visibility": variables['visibility']}
         for optional_spec in ["namespace", "description", "import_url"]:

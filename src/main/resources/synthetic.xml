@@ -157,10 +157,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
           description="Listens to a GitLab repository for fresh code commit ">
         <property name="scriptLocation" default="gitlab/CommitTrigger.py" hidden="true"/>
         <!-- repository -->
-        <property name="gitlab_server" category="Repository" referenced-type="gitlab.Server" kind="ci"
-                  description="Gitlab server to poll"/>
+        <property name="gitlab_server" label="GitLab Server" category="Repository" referenced-type="gitlab.Server" kind="ci"/>
         <property name="api_key" label="API Key" category="Repository" default="" required="false"
-                  description="Optional API token to override the global server configuration"/>
+                  description="Optionally, provide an API token to override the global server configuration"/>
         <property name="project_id" label="Project ID" kind="integer" category="Repository" required="true"
                   description="GitLab project to monitor - should be an integer"/>
         <property name="branchName" kind="string" category="Repository" required="false"
@@ -169,6 +168,31 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <!-- output variables -->
         <property name="commitId" category="variables" required="false" description="Id of the commit."/>
         <property name="branch" category="variables" required="false" description="Branch where the commit occurred."/>
+    </type>
+
+    <type type="gitlab.TagTrigger" extends="xlrelease.ReleaseTrigger"
+          description="Listens to a GitLab repository for new tags">
+        <property name="scriptLocation" default="gitlab/TagTrigger.py" hidden="true"/>
+        <!-- repository -->
+        <property name="gitlab_server" label="GitLab Server" category="Repository" referenced-type="gitlab.Server" kind="ci"/>
+        <property name="api_key" label="API Key" category="Repository" default="" required="false"
+                  description="Optionally, provide an API token to override the global server configuration"/>
+        <property name="project_id" label="Project ID" kind="integer" category="Repository" required="true"
+                  description="GitLab project to monitor - should be an integer"/>
+        <property name="search" kind="string" category="Repository" required="false"
+                  description="Optionally, specify a search to filter what tags will be processed.  This uses the standard GitLab tags search criteria, so consult GitLab documentation on the syntax"/>
+
+        <!-- output variables -->
+        <property name="tagName" category="variables" required="false"/>
+        <property name="tagMessage" category="variables" required="false"/>
+        <property name="commitId" category="variables" required="false"/>
+        <property name="commitTitle" category="variables" required="false"/>
+        <property name="commitMessage" category="variables" required="false"/>
+        <property name="commitAuthor" category="variables" required="false"/>
+        <property name="commitCommitter" category="variables" required="false"/>
+        <property name="commitCreationDatetime" category="variables" required="false"/>
+        <property name="commitAuthoredDatetime" category="variables" required="false"/>
+        <property name="commitCommittedDatetime" category="variables" required="false"/>
     </type>
 
     <!-- Tile Configuration -->
