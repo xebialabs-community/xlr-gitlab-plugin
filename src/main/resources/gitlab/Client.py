@@ -257,6 +257,28 @@ class Client(object):
         return {"commits": "%s" % json.dumps(commits)}
 
     @staticmethod
+    def gitlab_querytags(variables):
+        endpoint = "/api/v4/projects/{0}/repository/tags?private_token={1}&order_by=updated&sort=asc".format(
+            variables['project_id'],
+            Client.get_gitlab_api_key(variables)
+        )
+        if variables['search'] not in [None, ""]:
+            endpoint += "&search={0}".format(variables['search'])
+        # Pagination
+        tags = []
+        # Calculate page sizes using max 100 results per page (GitLab limit) and the user-specified results_limit
+        result_set_sizes = [min(variables['results_limit'] - i, 100) for i in range(0, variables['results_limit'], 100)]
+        for page_num, result_set_size in enumerate(result_set_sizes, 1):
+            endpoint_page = "%s&per_page=100&page=%s" % (endpoint, page_num)
+            response = Client.get_request(variables).get(endpoint_page)
+            tags_set = Client.handle_response(response)
+            if tags_set == []:  # no more results to pull
+                break
+            else:  # pull results based on expected results_limit count for that page
+                tags += tags_set[0:result_set_size]
+        return {"tags": "%s" % json.dumps(tags)}
+
+    @staticmethod
     def gitlab_querypipelines(variables):
         endpoint = "/api/v4/projects/{0}/pipelines?private_token={1}".format(
             variables['project_id'],
