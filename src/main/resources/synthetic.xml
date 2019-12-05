@@ -9,8 +9,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 -->
 <synthetic xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd" xmlns="http://www.xebialabs.com/deployit/synthetic"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <type type="gitlab.Server" extends="xlrelease.Configuration">
-        <property name="url" required="true" label="Server URL"/>
+    <type type="gitlab.Server" extends="configuration.HttpConnection">        
         <property name="api_key" required="true" label="API Key" password="true"/>
     </type>
 
