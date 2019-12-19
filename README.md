@@ -17,14 +17,14 @@ Please see the [XL Release Documentation](https://docs.xebialabs.com/xl-release/
 The xlr-gitlab-plugin provides the following XL Release functionality:
 
 ### Tasks
-  * Query for projects
-  * Create a project
-  * Create a project webhook
   * Query for merge requests
   * Create a merge request
   * Accept a merge request
   * Create a tag
   * Create a branch
+  * Query for projects
+  * Create a project
+  * Create a project webhook
   * Trigger a pipeline
 
 ### Triggers
@@ -101,6 +101,28 @@ The xlr-gitlab-plugin provides the following XL Release functionality:
   *  Project Name : Name of the Project to query for.
   *  Namespace : Optional namespace to limit the query to (groups).
   *  Project ID : Numerical Project ID for GitLab Project.
+
+#### Create Project
+![Create Project](images/create_project.png)
+
+  *  GitLab Server : The GitLab Server configuration to use for this task.
+  *  API Key : Optionally, override the API Key.
+  *  Project Name : Name of the Project to create.
+  *  Path : Path for the Project to create.
+  *  Namespace : Namespace (could be a user or a group) ID for the project.
+  *  Description : Optionally, provide a project description.
+  *  Import URL : Optionally, provide an import URL to import a different repo.
+  *  Visibility : Visibility of the project - private, internal, or public.
+  *  Project ID : Project ID of the create GitLab Project (this is an output property).
+
+#### Create Project Webhook
+![Create Project Webhook](images/create_project_webhook.png)
+
+  *  GitLab Server : The GitLab Server configuration to use for this task.
+  *  API Key : Optionally, override the API Key.
+  *  Project ID : ID of the project to add a webhook to.
+  *  Triggers : A variety of boolean properties to configure on which events the webhook will trigger.
+  *  Hook ID : Webhook ID after creation (this is an output property).
 
 #### Trigger Pipeline
 ![Trigger Pipeline](images/trigger_pipeline.png)
