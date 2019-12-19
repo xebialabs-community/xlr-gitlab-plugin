@@ -25,6 +25,7 @@ The xlr-gitlab-plugin provides the following XL Release functionality:
   * Query for projects
   * Create a project
   * Create a project webhook
+  * Create a group
   * Trigger a pipeline
 
 ### Triggers
@@ -123,6 +124,17 @@ The xlr-gitlab-plugin provides the following XL Release functionality:
   *  Project ID : ID of the project to add a webhook to.
   *  Triggers : A variety of boolean properties to configure on which events the webhook will trigger.
   *  Hook ID : Webhook ID after creation (this is an output property).
+
+#### Create Group
+![Create Group](images/create_group.png)
+
+  *  GitLab Server : The GitLab Server configuration to use for this task.
+  *  API Key : Optionally, override the API Key.
+  *  Group Name : Name of the new group.
+  *  Path : Path for the new group.
+  *  Description : Optionally, provide a group description.
+  *  Visibility : Visibility of the group - private, internal, or public.
+  *  Group ID : Group ID of the new GitLab group (this is an output property).
 
 #### Trigger Pipeline
 ![Trigger Pipeline](images/trigger_pipeline.png)

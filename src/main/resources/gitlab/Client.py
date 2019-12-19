@@ -236,6 +236,25 @@ class Client(object):
         return {"project_id": "%s" % data['id']}
 
     @staticmethod
+    def gitlab_creategroup(variables):
+        group_spec = {
+            "name": variables['group_name'],
+            "path": variables['path'],
+            "visibility": variables['visibility']
+        }
+        for optional_spec in ["description"]:
+            if optional_spec in variables.keys():
+                group_spec[optional_spec] = variables[optional_spec]
+        content = Client.build_content(group_spec)
+        endpoint = "/api/v4/groups?private_token={0}".format(Client.get_gitlab_api_key(variables))
+        data = Client.handle_response(Client.get_request(variables).post(
+            endpoint,
+            content,
+            contentType=''
+        ))
+        return {"group_id": "%s" % data['id']}
+
+    @staticmethod
     def gitlab_querycommits(variables):
         endpoint = "/api/v4/projects/{0}/repository/commits?private_token={1}".format(
             variables['project_id'],

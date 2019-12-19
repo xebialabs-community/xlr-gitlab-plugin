@@ -9,7 +9,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 -->
 <synthetic xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd" xmlns="http://www.xebialabs.com/deployit/synthetic"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <type type="gitlab.Server" extends="configuration.HttpConnection">        
+    <type type="gitlab.Server" extends="configuration.HttpConnection">
         <property name="api_key" required="true" label="API Key" password="true"/>
     </type>
 
@@ -93,6 +93,20 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="branch" category="input" required="true" label="New Branch Name"/>
         <property name="ref" category="input" required="true" label="Reference" description="Branch name or commit SHA to create branch from"/>
         <property name="commit_id" category="output" label="Commit Source" description="Commit ID used to generate the new branch"/>
+    </type>
+
+    <type type="gitlab.CreateGroup" extends="gitlab.Task">
+        <property name="group_name" category="input" label="Group Name" required="true"/>
+        <property name="path" category="input" required="true"/>
+        <property name="description" kind="string" size="large" category="input" required="false"/>
+        <property name="visibility" category="input" kind="enum" required="true" description="Group visibility">
+            <enum-values>
+                <value label="Public">public</value>
+                <value label="Internal">internal</value>
+                <value label="Private">private</value>
+            </enum-values>
+        </property>
+        <property name="group_id" category="output" label="Group ID"/>
     </type>
 
     <type type="gitlab.CreateProject" extends="gitlab.Task">
