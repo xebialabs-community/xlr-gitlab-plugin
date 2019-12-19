@@ -225,7 +225,8 @@ class Client(object):
         proj_spec = {"name": variables['project_name'], "path": variables['path'], "visibility": variables['visibility']}
         for optional_spec in ["namespace", "description", "import_url"]:
             if optional_spec in variables.keys():
-                proj_spec[optional_spec] = variables[optional_spec]
+                api_attribute = "namespace_id" if optional_spec == "namespace" else optional_spec
+                proj_spec[api_attribute] = variables[optional_spec]
         content = Client.build_content(proj_spec)
         endpoint = "/api/v4/projects?private_token={0}".format(Client.get_gitlab_api_key(variables))
         data = Client.handle_response(Client.get_request(variables).post(
