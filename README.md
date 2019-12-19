@@ -18,6 +18,8 @@ The xlr-gitlab-plugin provides the following XL Release functionality:
 
 ### Tasks
   * Query for projects
+  * Create a project
+  * Create a project webhook
   * Query for merge requests
   * Create a merge request
   * Accept a merge request
@@ -61,15 +63,6 @@ The xlr-gitlab-plugin provides the following XL Release functionality:
   *  Project ID : Numerical Project ID for GitLab Project.
   *  Merge ID : Numerical Merge ID for the GitLab Merge Request.
 
-#### Query Project
-![Create Merge Request](images/query_project.png)
-
-  *  GitLab Server : The GitLab Server configuration to use for this task.
-  *  API Key : Optional override API Key.
-  *  Project Name : Name of the Project to query for.
-  *  Namespace : Optional namespace to limit the query to (groups).
-  *  Project ID : Numerical Project ID for GitLab Project.
-
 #### Query Merge Requests
 ![Create Merge Request](images/query_merge_requests.png)
 
@@ -100,6 +93,15 @@ The xlr-gitlab-plugin provides the following XL Release functionality:
   *  Tag Message : An optional description for the tag.
   *  Commit ID : The ID of the commit used by the newly created tag (useful when specifying a branch or tag name as Ref).
 
+#### Query Project
+![Query Project](images/query_project.png)
+
+  *  GitLab Server : The GitLab Server configuration to use for this task.
+  *  API Key : Optional override API Key.
+  *  Project Name : Name of the Project to query for.
+  *  Namespace : Optional namespace to limit the query to (groups).
+  *  Project ID : Numerical Project ID for GitLab Project.
+
 #### Trigger Pipeline
 ![Trigger Pipeline](images/trigger_pipeline.png)
 
@@ -109,9 +111,9 @@ The xlr-gitlab-plugin provides the following XL Release functionality:
 
 ##### Gitlab Webhook Configuration
 
-Here's the URL Format : 
+Here's the URL Format :
 ```
-http://username:password@xlrserver:port/api/extension/gitlab/commit_webhook?template=<templateName/prefix> 
+http://username:password@xlrserver:port/api/extension/gitlab/commit_webhook?template=<templateName/prefix>
 ```
 
 ![Gitlab Webhook Configuration](images/commit_webhook_configure.png)
@@ -127,7 +129,7 @@ http://username:password@xlrserver:port/api/extension/gitlab/commit_webhook?temp
 
 ##### Gitlab Webhook Configuration
 ```
-http://username:password@xlrserver:port/api/extension/gitlab/pr_webhook?template=<templateName/prefix> 
+http://username:password@xlrserver:port/api/extension/gitlab/pr_webhook?template=<templateName/prefix>
 ```
 
 ![Gitlab Webhook Configuration](images/pr_webhook_configure.png)
