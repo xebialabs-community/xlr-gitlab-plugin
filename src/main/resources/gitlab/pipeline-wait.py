@@ -16,7 +16,9 @@ if response is not None:
     for key, value in response.items():
         locals()[key] = value
 
-task.setStatusLine("Pipeline #{0}:{1} ".format(response["pipeline_id"], response["status"]))
+task.setStatusLine(
+    "Pipeline #{0}:{1} ".format(response["pipeline_id"], response["status"])
+)
 pipeline_status = response["status"]
 pipeline_web_url = response["web_url"]
 

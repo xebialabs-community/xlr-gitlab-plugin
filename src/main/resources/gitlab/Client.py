@@ -22,7 +22,7 @@ class Client(object):
 
     @staticmethod
     def get_gitlab_server(variables):
-        gitlab_server = variables['gitlab_server']
+        gitlab_server = variables["gitlab_server"]
         if gitlab_server is None:
             raise Exception("No GitLab Server provided!")
         return gitlab_server
@@ -30,13 +30,13 @@ class Client(object):
     @staticmethod
     def get_gitlab_api_key(variables):
         gitlab_server = Client.get_gitlab_server(variables)
-        if not variables['api_key']:
-            if variables['gitlab_server']['api_key']:
-                return gitlab_server['api_key']
+        if not variables["api_key"]:
+            if variables["gitlab_server"]["api_key"]:
+                return gitlab_server["api_key"]
             else:
                 raise Exception("API Key Not Set!")
         else:
-            return variables['api_key']
+            return variables["api_key"]
 
     @staticmethod
     def handle_response(response):
@@ -47,7 +47,10 @@ class Client(object):
 
     @staticmethod
     def build_projects_endpoint(url, variables):
-        return "/api/v4/projects%s&private_token=%s" % (url, Client.get_gitlab_api_key(variables))
+        return "/api/v4/projects%s&private_token=%s" % (
+            url,
+            Client.get_gitlab_api_key(variables),
+        )
 
     @staticmethod
     def build_projects_pipeline_endpoint(project):
@@ -70,64 +73,92 @@ class Client(object):
     @staticmethod
     def gitlab_createmergerequest(variables):
         content = Client.build_content(
-            {"source_branch": variables['source_branch'], "target_branch": variables['target_branch'],
-             "title": variables['title'], "target_project_id": variables['target_project_id']})
-        data = Client.handle_response(Client.get_request(variables).post(
-            Client.build_projects_endpoint("/%s/merge_requests?" % variables['project_id'], variables),
-            content,
-            contentType=''))
-        return {"merge_id": "%s" % data.get('iid')}
+            {
+                "source_branch": variables["source_branch"],
+                "target_branch": variables["target_branch"],
+                "title": variables["title"],
+                "target_project_id": variables["target_project_id"],
+            }
+        )
+        data = Client.handle_response(
+            Client.get_request(variables).post(
+                Client.build_projects_endpoint(
+                    "/%s/merge_requests?" % variables["project_id"], variables
+                ),
+                content,
+                contentType="",
+            )
+        )
+        return {"merge_id": "%s" % data.get("iid")}
 
     @staticmethod
     def gitlab_acceptmergerequest(variables):
-        Client.handle_response(Client.get_request(variables).put(
-            Client.build_projects_endpoint(
-                "/%s/merge_requests/%s/merge?" % (variables['project_id'], variables['merge_id']), variables), '',
-            contentType=''))
+        Client.handle_response(
+            Client.get_request(variables).put(
+                Client.build_projects_endpoint(
+                    "/%s/merge_requests/%s/merge?"
+                    % (variables["project_id"], variables["merge_id"]),
+                    variables,
+                ),
+                "",
+                contentType="",
+            )
+        )
 
     @staticmethod
     def filter_project_on_namespace(data, namespace):
         if namespace is None:
             return {"project_id": ""}
         for project in data:
-            if namespace in project['name_with_namespace']:
-                return {"project_id": "%s" % project['id']}
+            if namespace in project["name_with_namespace"]:
+                return {"project_id": "%s" % project["id"]}
         return {"project_id": ""}
 
     @staticmethod
     def gitlab_queryproject(variables):
-        data = Client.handle_response(Client.get_request(variables).get(
-            Client.build_projects_endpoint("?search=%s" % variables['project_name'], variables)))
+        data = Client.handle_response(
+            Client.get_request(variables).get(
+                Client.build_projects_endpoint(
+                    "?search=%s" % variables["project_name"], variables
+                )
+            )
+        )
         if len(data) == 1:
-            return {"project_id": "%s" % data[0]['id']}
+            return {"project_id": "%s" % data[0]["id"]}
         elif len(data) > 1:
-            return Client.filter_project_on_namespace(data, variables['namespace'])
+            return Client.filter_project_on_namespace(data, variables["namespace"])
 
     @staticmethod
     def gitlab_querymergerequests(variables):
         endpoint = Client.build_projects_endpoint(
-            "/%s/merge_requests?state=%s" % (variables['project_id'], variables['state']), variables)
+            "/%s/merge_requests?state=%s"
+            % (variables["project_id"], variables["state"]),
+            variables,
+        )
         # Sorting and filtering merge request results
-        if variables['sorting'] == 'Creation Datetime Descending':
+        if variables["sorting"] == "Creation Datetime Descending":
             endpoint = "%s&order_by=created_at&sort=desc" % endpoint
-        if variables['sorting'] == 'Creation Datetime Ascending':
+        if variables["sorting"] == "Creation Datetime Ascending":
             endpoint = "%s&order_by=created_at&sort=asc" % endpoint
-        if variables['sorting'] == 'Last Update Datetime Descending':
+        if variables["sorting"] == "Last Update Datetime Descending":
             endpoint = "%s&order_by=updated_at&sort=desc" % endpoint
-        if variables['sorting'] == 'Last Update Datetime Ascending':
+        if variables["sorting"] == "Last Update Datetime Ascending":
             endpoint = "%s&order_by=updated_at&sort=asc" % endpoint
-        if variables['simple_view']:
+        if variables["simple_view"]:
             endpoint = "%s&view=simple" % endpoint
-        if variables['source_branch'] is not None:
-            endpoint = "%s&source_branch=%s" % (endpoint, variables['source_branch'])
-        if variables['target_branch'] is not None:
-            endpoint = "%s&target_branch=%s" % (endpoint, variables['target_branch'])
-        if variables['milestone'] is not None:
-            endpoint = "%s&milestone=%s" % (endpoint, variables['milestone'])
+        if variables["source_branch"] is not None:
+            endpoint = "%s&source_branch=%s" % (endpoint, variables["source_branch"])
+        if variables["target_branch"] is not None:
+            endpoint = "%s&target_branch=%s" % (endpoint, variables["target_branch"])
+        if variables["milestone"] is not None:
+            endpoint = "%s&milestone=%s" % (endpoint, variables["milestone"])
         # Pagination
         merge_requests = []
         # Calculate page sizes using max 100 results per page (GitLab limit) and the user-specified results_limit
-        result_set_sizes = [min(variables['results_limit'] - i, 100) for i in range(0, variables['results_limit'], 100)]
+        result_set_sizes = [
+            min(variables["results_limit"] - i, 100)
+            for i in range(0, variables["results_limit"], 100)
+        ]
         for page_num, result_set_size in enumerate(result_set_sizes, 1):
             endpoint_page = "%s&per_page=100&page=%s" % (endpoint, page_num)
             response = Client.get_request(variables).get(endpoint_page)
@@ -141,28 +172,45 @@ class Client(object):
     @staticmethod
     def gitlab_createtag(variables):
         content = Client.build_content(
-            {"tag_name": variables['tag_name'], "ref": variables['ref'], "message": variables['message']})
-        data = Client.handle_response(Client.get_request(variables).post(
-            Client.build_projects_endpoint("/%s/repository/tags?" % variables['project_id'], variables),
-            content,
-            contentType=''))
-        return {"commit_id": "%s" % data['commit']['id']}
+            {
+                "tag_name": variables["tag_name"],
+                "ref": variables["ref"],
+                "message": variables["message"],
+            }
+        )
+        data = Client.handle_response(
+            Client.get_request(variables).post(
+                Client.build_projects_endpoint(
+                    "/%s/repository/tags?" % variables["project_id"], variables
+                ),
+                content,
+                contentType="",
+            )
+        )
+        return {"commit_id": "%s" % data["commit"]["id"]}
 
     @staticmethod
     def gitlab_createbranch(variables):
-        content = Client.build_content({"branch": variables['branch'], "ref": variables['ref']})
-        data = Client.handle_response(Client.get_request(variables).post(
-            Client.build_projects_endpoint("/%s/repository/branches?" % variables['project_id'], variables),
-            content,
-            contentType=''))
-        return {"commit_id": "%s" % data['commit']['id']}
+        content = Client.build_content(
+            {"branch": variables["branch"], "ref": variables["ref"]}
+        )
+        data = Client.handle_response(
+            Client.get_request(variables).post(
+                Client.build_projects_endpoint(
+                    "/%s/repository/branches?" % variables["project_id"], variables
+                ),
+                content,
+                contentType="",
+            )
+        )
+        return {"commit_id": "%s" % data["commit"]["id"]}
 
     @staticmethod
     def gitlab_triggerpipeline(variables):
-        endpoint = "/api/v4/projects/{0}/ref/{1}/trigger/pipeline?token={2}".format(variables['project_id'],
-                                                                                    variables['ref'],
-                                                                                        variables['token'])
-        pipeline_variable = variables['variables']
+        endpoint = "/api/v4/projects/{0}/ref/{1}/trigger/pipeline?token={2}".format(
+            variables["project_id"], variables["ref"], variables["token"]
+        )
+        pipeline_variable = variables["variables"]
         if len(pipeline_variable) > 0:
             entries = []
             for key, value in pipeline_variable.iteritems():
@@ -171,40 +219,44 @@ class Client(object):
             endpoint = endpoint + "&" + variables_parameters
 
         print "* gitlab_triggerpipeline.endpoint: {0}".format(endpoint)
-        data = Client.handle_response(Client.get_request(variables).post(endpoint, '', contentType=''))
+        data = Client.handle_response(
+            Client.get_request(variables).post(endpoint, "", contentType="")
+        )
         print "[Pipeline #{0}]({1})".format(data["id"], data["web_url"])
-        status = {"pipeline_id": "%s" % data['id'], "status": "%s" % data['status']}
+        status = {"pipeline_id": "%s" % data["id"], "status": "%s" % data["status"]}
         return status
 
     @staticmethod
     def gitlab_pipeline_status(variables):
-        pipeline_id = variables['pipeline_id']
-        endpoint = "/api/v4/projects/{0}/pipelines/{1}?private_token={2}".format(variables['project_id'], pipeline_id,
-                                                                                 Client.get_gitlab_api_key(variables))
+        pipeline_id = variables["pipeline_id"]
+        endpoint = "/api/v4/projects/{0}/pipelines/{1}?private_token={2}".format(
+            variables["project_id"], pipeline_id, Client.get_gitlab_api_key(variables)
+        )
         # print "* gitlab_pipeline_status.endpoint: {0}".format(endpoint)
         data = Client.handle_response(Client.get_request(variables).get(endpoint))
         # print "* data {0}".format(data)
-        status = {"pipeline_id": "{0}".format(data.get('id')),
-                  "status": data.get('status'),
-                  "web_url": data.get('web_url')}
+        status = {
+            "pipeline_id": "{0}".format(data.get("id")),
+            "status": data.get("status"),
+            "web_url": data.get("web_url"),
+        }
         # print "* gitlab_pipeline_status.status: {0}".format(status)
         return status
 
     @staticmethod
     def gitlab_branch_statuses(variables):
         endpoint = "/api/v4/projects/{0}/repository/branches?private_token={1}".format(
-            variables['project_id'],
-            Client.get_gitlab_api_key(variables)
+            variables["project_id"], Client.get_gitlab_api_key(variables)
         )
         branches = Client.handle_response(Client.get_request(variables).get(endpoint))
         # build a map of the commit ids for each branch
         latest_commits = {}
         for branch in branches:
-            if not variables['branchName']:
+            if not variables["branchName"]:
                 branch_id = branch["name"]
                 last_commit = branch["commit"]["id"]
                 latest_commits[branch_id] = last_commit
-            elif branch["name"] == variables['branchName']:
+            elif branch["name"] == variables["branchName"]:
                 branch_id = branch["name"]
                 last_commit = branch["commit"]["id"]
                 latest_commits[branch_id] = last_commit
@@ -213,59 +265,67 @@ class Client(object):
     @staticmethod
     def gitlab_tag_statuses(variables):
         endpoint = "/api/v4/projects/{0}/repository/tags?private_token={1}&order_by=updated&sort=asc".format(
-            variables['project_id'],
-            Client.get_gitlab_api_key(variables)
+            variables["project_id"], Client.get_gitlab_api_key(variables)
         )
-        if variables['search'] not in [None, ""]:
-            endpoint += "&search={0}".format(variables['search'])
+        if variables["search"] not in [None, ""]:
+            endpoint += "&search={0}".format(variables["search"])
         return Client.handle_response(Client.get_request(variables).get(endpoint))
 
     @staticmethod
     def gitlab_createproject(variables):
-        proj_spec = {"name": variables['project_name'], "path": variables['path'], "visibility": variables['visibility']}
+        proj_spec = {
+            "name": variables["project_name"],
+            "path": variables["path"],
+            "visibility": variables["visibility"],
+        }
         for optional_spec in ["namespace", "description", "import_url"]:
             if optional_spec in variables.keys():
-                api_attribute = "namespace_id" if optional_spec == "namespace" else optional_spec
+                api_attribute = (
+                    "namespace_id" if optional_spec == "namespace" else optional_spec
+                )
                 proj_spec[api_attribute] = variables[optional_spec]
         content = Client.build_content(proj_spec)
-        endpoint = "/api/v4/projects?private_token={0}".format(Client.get_gitlab_api_key(variables))
-        data = Client.handle_response(Client.get_request(variables).post(
-            endpoint,
-            content,
-            contentType=''))
-        return {"project_id": "%s" % data['id']}
+        endpoint = "/api/v4/projects?private_token={0}".format(
+            Client.get_gitlab_api_key(variables)
+        )
+        data = Client.handle_response(
+            Client.get_request(variables).post(endpoint, content, contentType="")
+        )
+        return {"project_id": "%s" % data["id"]}
 
     @staticmethod
     def gitlab_creategroup(variables):
         group_spec = {
-            "name": variables['group_name'],
-            "path": variables['path'],
-            "visibility": variables['visibility']
+            "name": variables["group_name"],
+            "path": variables["path"],
+            "visibility": variables["visibility"],
         }
         for optional_spec in ["description"]:
             if optional_spec in variables.keys():
                 group_spec[optional_spec] = variables[optional_spec]
         content = Client.build_content(group_spec)
-        endpoint = "/api/v4/groups?private_token={0}".format(Client.get_gitlab_api_key(variables))
-        data = Client.handle_response(Client.get_request(variables).post(
-            endpoint,
-            content,
-            contentType=''
-        ))
-        return {"group_id": "%s" % data['id']}
+        endpoint = "/api/v4/groups?private_token={0}".format(
+            Client.get_gitlab_api_key(variables)
+        )
+        data = Client.handle_response(
+            Client.get_request(variables).post(endpoint, content, contentType="")
+        )
+        return {"group_id": "%s" % data["id"]}
 
     @staticmethod
     def gitlab_querycommits(variables):
         endpoint = "/api/v4/projects/{0}/repository/commits?private_token={1}".format(
-            variables['project_id'],
-            Client.get_gitlab_api_key(variables)
+            variables["project_id"], Client.get_gitlab_api_key(variables)
         )
-        if variables['branch'] is not None:
-            endpoint += "&" + "ref_name=" + variables['branch']
+        if variables["branch"] is not None:
+            endpoint += "&" + "ref_name=" + variables["branch"]
         # Pagination
         commits = []
         # Calculate page sizes using max 100 results per page (GitLab limit) and the user-specified results_limit
-        result_set_sizes = [min(variables['results_limit'] - i, 100) for i in range(0, variables['results_limit'], 100)]
+        result_set_sizes = [
+            min(variables["results_limit"] - i, 100)
+            for i in range(0, variables["results_limit"], 100)
+        ]
         for page_num, result_set_size in enumerate(result_set_sizes, 1):
             endpoint_page = "%s&per_page=100&page=%s" % (endpoint, page_num)
             response = Client.get_request(variables).get(endpoint_page)
@@ -279,15 +339,17 @@ class Client(object):
     @staticmethod
     def gitlab_querytags(variables):
         endpoint = "/api/v4/projects/{0}/repository/tags?private_token={1}&order_by=updated&sort=asc".format(
-            variables['project_id'],
-            Client.get_gitlab_api_key(variables)
+            variables["project_id"], Client.get_gitlab_api_key(variables)
         )
-        if variables['search'] not in [None, ""]:
-            endpoint += "&search={0}".format(variables['search'])
+        if variables["search"] not in [None, ""]:
+            endpoint += "&search={0}".format(variables["search"])
         # Pagination
         tags = []
         # Calculate page sizes using max 100 results per page (GitLab limit) and the user-specified results_limit
-        result_set_sizes = [min(variables['results_limit'] - i, 100) for i in range(0, variables['results_limit'], 100)]
+        result_set_sizes = [
+            min(variables["results_limit"] - i, 100)
+            for i in range(0, variables["results_limit"], 100)
+        ]
         for page_num, result_set_size in enumerate(result_set_sizes, 1):
             endpoint_page = "%s&per_page=100&page=%s" % (endpoint, page_num)
             response = Client.get_request(variables).get(endpoint_page)
@@ -301,8 +363,7 @@ class Client(object):
     @staticmethod
     def gitlab_querypipelines(variables):
         endpoint = "/api/v4/projects/{0}/pipelines?private_token={1}".format(
-            variables['project_id'],
-            Client.get_gitlab_api_key(variables)
+            variables["project_id"], Client.get_gitlab_api_key(variables)
         )
         data = Client.handle_response(Client.get_request(variables).get(endpoint))
         return {"pipelines": "%s" % json.dumps(data)}
@@ -310,17 +371,31 @@ class Client(object):
     @staticmethod
     def gitlab_createprojectwebhook(variables):
         content_params = [
-            "url", "push_events", "issues_events", "confidential_issues_events", "merge_requests_events",
-            "tag_push_events", "note_events", "job_events", "pipeline_events", "wiki_page_events",
-            "enable_ssl_verification", "token"
+            "url",
+            "push_events",
+            "issues_events",
+            "confidential_issues_events",
+            "merge_requests_events",
+            "tag_push_events",
+            "note_events",
+            "job_events",
+            "pipeline_events",
+            "wiki_page_events",
+            "enable_ssl_verification",
+            "token",
         ]
         webhook = {}
         for var_key in variables.keys():
             if var_key in content_params:
                 webhook[var_key] = variables[var_key]
         content = Client.build_content(webhook)
-        data = Client.handle_response(Client.get_request(variables).post(
-            Client.build_projects_endpoint("/%s/hooks?" % variables['project_id'], variables),
-            content,
-            contentType=''))
-        return {"hook_id": "%s" % data['id']}
+        data = Client.handle_response(
+            Client.get_request(variables).post(
+                Client.build_projects_endpoint(
+                    "/%s/hooks?" % variables["project_id"], variables
+                ),
+                content,
+                contentType="",
+            )
+        )
+        return {"hook_id": "%s" % data["id"]}

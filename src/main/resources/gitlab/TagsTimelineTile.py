@@ -12,9 +12,11 @@ import json
 from gitlab.Client import Client
 from java.time import LocalDate, ZonedDateTime
 
+
 def convertRFC3339ToDate(timestamp):
     zonedDateTime = ZonedDateTime.parse(timestamp)
     return zonedDateTime.toLocalDate()
+
 
 tags = json.loads(Client.gitlab_querytags(locals())["tags"])
 
@@ -55,5 +57,5 @@ data = {
     "dates": days,
     "tagsEachDay": tagsEachDay,
     "tagNamesEachDay": tagNamesEachDay,
-    "tags": tags
+    "tags": tags,
 }

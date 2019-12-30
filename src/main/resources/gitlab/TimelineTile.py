@@ -12,9 +12,11 @@ import json
 from gitlab.Client import Client
 from java.time import LocalDate, ZonedDateTime
 
+
 def convertRFC3339ToDate(timestamp):
     zonedDateTime = ZonedDateTime.parse(timestamp)
     return zonedDateTime.toLocalDate()
+
 
 commits = json.loads(Client.gitlab_querycommits(locals())["commits"])
 
@@ -42,8 +44,4 @@ while startDate.isBefore(endDate.plusDays(1)):
         commitsEachDay.append(0)
     startDate = startDate.plusDays(1)
 
-data = {
-    "dates": days,
-    "commitsEachDay": commitsEachDay,
-    "commits": commits
-}
+data = {"dates": days, "commitsEachDay": commitsEachDay, "commits": commits}
