@@ -8,33 +8,27 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 -->
 <!DOCTYPE html>
 <html>
-  <head>
-    <!-- Bootstrap CSS dependency -->
+<head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="gitlab-commits-tile.css" type="text/css">
+    <link rel="stylesheet" href="gitlab-tiles.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <script
             src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous">
     </script>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 </head>
 <script>
     window.addEventListener("xlrelease.load", function () {
         window.xlrelease.queryTileData(function (response) {
-            var commits = response.data.data.commits;
-            commits.forEach(function (commit) {
-                $("#commits").append(
+            var pipelines = response.data.data.pipelines;
+            pipelines.forEach(function (pipeline) {
+                $("#pipelines").append(
                     '<tr>' +
-                    '<td>' + commit.short_id + '</td>' +
-                    '<td class="commit-datetime">' + commit.authored_date + '</td>' +
-                    '<td>' + commit.author_name +
-                    ' (<a href="mailto:' + commit.author_email + '">' + commit.author_email + '</a>)</td>' +
-                    '<td class="commit-datetime">' + commit.committed_date + '</td>' +
-                    '<td>' + commit.committer_name +
-                    ' (<a href="mailto:' + commit.committer_email + '">' + commit.committer_email + '</a>)</td>' +
-                    '<td>' + commit.message + '</td>' +
+                    '<td>' + pipeline.id + '</td>' +
+                    '<td><div class="status status-' + pipeline.status + '">' + pipeline.status + '</div></td>' +
+                    '<td><a href="' + pipeline.web_url  + '">' + pipeline.web_url + '</a></td>' +
                     '</tr>'
                 );
             })
@@ -42,19 +36,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     });
 </script>
 <body>
+<div class="pipelines-tile-summary">
 <table class="table table-rounded table-striped">
     <thead>
     <tr>
-        <th>Commit&nbsp;ID</th>
-        <th>Authored Date</th>
-        <th>Author</th>
-        <th>Committed Date</th>
-        <th>Committer</th>
-        <th>Message</th>
+        <th>Pipeline ID</th>
+        <th>Status</th>
+        <th>URL</th>
     </tr>
     </thead>
-    <tbody id="commits">
+    <tbody id="pipelines">
     </tbody>
 </table>
+</div>
 </body>
-</html>
+  </html>

@@ -185,7 +185,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                   description="GitLab project to monitor - should be an integer"/>
         <property name="branchName" kind="string" category="Repository" required="false"
                   description="Optionally, specify a branch name if only listening for commits on a single branch"/>
-
         <!-- output variables -->
         <property name="commitId" category="variables" required="false" description="Id of the commit."/>
         <property name="branch" category="variables" required="false" description="Branch where the commit occurred."/>
@@ -202,7 +201,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                   description="GitLab project to monitor - should be an integer"/>
         <property name="search" kind="string" category="Repository" required="false"
                   description="Optionally, specify a search to filter what tags will be processed.  This uses the standard GitLab tags search criteria, so consult GitLab documentation on the syntax"/>
-
         <!-- output variables -->
         <property name="tagName" category="variables" required="false"/>
         <property name="tagMessage" category="variables" required="false"/>
@@ -219,8 +217,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <!-- Tile Configuration -->
     <type type="gitlab.CommitsTile" label="GitLab Commits Tile" extends="xlrelease.Tile" description="Display a list of the latest commits to a branch">
         <property default="release,folder,global" hidden="true" name="supportedScopes" kind="list_of_string"/>
-        <property name="uri" hidden="true" default="gitlab/CommitsTile/gitlab-commits-tile-summary-view.html"/>
-        <property name="detailsUri" hidden="true" default="gitlab/CommitsTile/gitlab-commits-tile-details-view.html" />
+        <property name="uri" hidden="true" default="commits-summary.html"/>
+        <property name="detailsUri" hidden="true" default="commits-detail.html" />
         <property name="title" description="Tile title." default="GitLab Commits Summary"/>
         <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci" />
         <property name="api_key" category="input" required="false" label="API Key"/>
@@ -232,8 +230,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <!-- Tile Configuration -->
     <type type="gitlab.ContributionsTile" label="GitLab Contributions Tile" extends="xlrelease.Tile" description="Display authors and committers for the latest commits">
         <property default="release,folder,global" hidden="true" name="supportedScopes" kind="list_of_string"/>
-        <property name="uri" hidden="true" default="gitlab/ContributionsTile/gitlab-contributions-tile-summary-view.html"/>
-        <property name="detailsUri" hidden="true" default="gitlab/ContributionsTile/gitlab-contributions-tile-details-view.html" />
+        <property name="uri" hidden="true" default="contributions-summary.html"/>
+        <property name="detailsUri" hidden="true" default="contributions-detail.html" />
         <property name="title" description="Tile title." default="GitLab Contributions Summary"/>
         <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci" />
         <property name="api_key" category="input" required="false" label="API Key"/>
@@ -245,8 +243,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <!-- Tile Configuration -->
     <type type="gitlab.TimelineTile" label="GitLab Timeline Tile" extends="xlrelease.Tile" description="Display a timeline of commits">
         <property default="release,folder,global" hidden="true" name="supportedScopes" kind="list_of_string"/>
-        <property name="uri" hidden="true" default="gitlab/TimelineTile/gitlab-timeline-tile-summary-view.html"/>
-        <property name="detailsUri" hidden="true" default="gitlab/TimelineTile/gitlab-timeline-tile-details-view.html" />
+        <property name="uri" hidden="true" default="commits-timeline-summary.html"/>
+        <property name="detailsUri" hidden="true" default="commits-timeline-detail.html" />
         <property name="title" description="Tile title." default="GitLab Commits Timeline"/>
         <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci" />
         <property name="api_key" category="input" required="false" label="API Key" description="Optionally, override the API key used to connect with the GitLab server"/>
@@ -258,8 +256,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <!-- Tile Configuration -->
     <type type="gitlab.TagsTimelineTile" label="GitLab Tags Timeline Tile" extends="xlrelease.Tile" description="Display a timeline of tags">
         <property default="release,folder,global" hidden="true" name="supportedScopes" kind="list_of_string"/>
-        <property name="uri" hidden="true" default="gitlab/TagsTimelineTile/gitlab-tags-timeline-tile-summary-view.html"/>
-        <property name="detailsUri" hidden="true" default="gitlab/TagsTimelineTile/gitlab-tags-timeline-tile-details-view.html" />
+        <property name="uri" hidden="true" default="tags-timeline-summary.html"/>
+        <property name="detailsUri" hidden="true" default="tags-timeline-detail.html" />
         <property name="title" description="Tile title." default="GitLab Tags Timeline"/>
         <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci" />
         <property name="api_key" category="input" required="false" label="API Key" description="Optionally, override the API key used to connect with the GitLab server"/>
@@ -272,8 +270,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <!-- Tile Configuration -->
     <type type="gitlab.PipelinesTile" label="GitLab Pipelines Tile" extends="xlrelease.Tile" description="Display a list of the latest pipeline executions, including status information and a direct link">
         <property default="release,folder,global" hidden="true" name="supportedScopes" kind="list_of_string"/>
-        <property name="uri" hidden="true" default="gitlab/PipelinesTile/gitlab-pipelines-tile-summary-view.html"/>
-        <property name="detailsUri" hidden="true" default="gitlab/PipelinesTile/gitlab-pipelines-tile-details-view.html" />
+        <property name="uri" hidden="true" default="pipelines-summary.html"/>
+        <property name="detailsUri" hidden="true" default="pipelines-detail.html" />
         <property name="title" description="Tile title." default="GitLab Pipelines Summary"/>
         <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci" />
         <property name="api_key" category="input" required="false" label="API Key"/>
@@ -283,8 +281,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <!-- Tile Configuration -->
     <type type="gitlab.MergeRequestsTile" label="GitLab Merge Requests Tile" extends="xlrelease.Tile" description="Display the breakdown of merge request statuses">
         <property default="release,folder,global" hidden="true" name="supportedScopes" kind="list_of_string"/>
-        <property name="uri" hidden="true" default="gitlab/MergeRequestsTile/gitlab-merge-requests-tile-summary-view.html"/>
-        <property name="detailsUri" hidden="true" default="gitlab/MergeRequestsTile/gitlab-merge-requests-tile-details-view.html" />
+        <property name="uri" hidden="true" default="merge-requests-summary.html"/>
+        <property name="detailsUri" hidden="true" default="merge-requests-detail.html" />
         <property name="title" description="Tile title." default="GitLab Merge Requests Summary"/>
         <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci" />
         <property name="project_id" category="input" required="true" label="Project ID"/>

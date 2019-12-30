@@ -8,56 +8,49 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 -->
 <!DOCTYPE html>
 <html>
-<head>
-    <link rel="stylesheet" href="gitlab-merge-requests-tile.css" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <head>
+    <!-- Bootstrap CSS dependency -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="gitlab-tiles.css" type="text/css">
     <script
             src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous">
     </script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 </head>
 <script>
     window.addEventListener("xlrelease.load", function () {
         window.xlrelease.queryTileData(function (response) {
-            var opened = 0;
-            var merged = 0;
-            var closed = 0;
-            var merge_requests = response.data.data.merge_requests;
-            merge_requests.forEach(function (mergeData) {
-                if (mergeData.state === "opened")
-                    opened++;
-                else if (mergeData.state === "merged")
-                    merged++;
-                else if (mergeData.state === "closed")
-                    closed++;
-           });
-
-            $("#opened").append(opened);
-            $("#merged").append(merged);
-            $("#closed").append(closed);
+            var pipelines = response.data.data.pipelines;
+            pipelines.forEach(function (pipeline) {
+                $("#pipelines").append(
+                    '<tr>' +
+                    '<td>' + pipeline.id + '</td>' +
+                    '<td><div class="status status-' + pipeline.status + '">' + pipeline.status + '</div></td>' +
+                    '<td>' + pipeline.ref + '</td>' +
+                    '<td>' + pipeline.sha + '</td>' +
+                    '<td><a href="' + pipeline.web_url  + '">' + pipeline.web_url + '</a></td>' +
+                    '</tr>'
+                );
+            })
         });
     });
 </script>
 <body>
-<div id="summary" class="merge-requests-tile-summary">
-    <table>
-        <tr>
-            <td class="label">Opened</td>
-            <td class="value" id="opened">
-            </td>
-        </tr>
-        <tr>
-            <td class="label_bordered">Merged</td>
-            <td class="value_bordered" id="merged">
-            </td>
-        </tr>
-        <tr>
-            <td class="label_bordered">Closed</td>
-            <td class="value_bordered" id="closed">
-            </td>
-        </tr>
-    </table>
-</div>
+<table class="table table-rounded table-striped">
+    <thead>
+    <tr>
+        <th>Pipeline ID</th>
+        <th>Status</th>
+        <th>Ref</th>
+        <th>SHA</th>
+        <th>URL</th>
+    </tr>
+    </thead>
+    <tbody id="pipelines">
+    </tbody>
+</table>
 </body>
 </html>

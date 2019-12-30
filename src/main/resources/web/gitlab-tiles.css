@@ -8,6 +8,26 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+.commits-tile-summary {
+    font-size: 12px;
+    font-family: "OpenSans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333333;
+}
+
+.commits-tile-summary table {
+    table-layout: fixed;
+}
+
+.commits-tile-summary td {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.commit-datetime {
+    white-space: nowrap;
+}
+
 .merge-requests-tile-summary {
     font-size: 12px;
     font-family: "OpenSans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -47,4 +67,43 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 .merge-requests-tile-summary .value_bordered {
     border-top: 1px solid #ddd;
     text-align: right;
+}
+
+.status {
+    border-radius: 3px;
+    color: rgb(255, 255, 255);
+    font-weight: 400;
+    padding: 4px 6px !important;
+    text-align: center;
+    width: 80px;
+}
+
+.status-pending {
+    background-color: rgb(153, 153, 153);
+}
+
+.status-running {
+    background-color: rgb(95, 203, 244);
+}
+
+.status-success {
+    background-color: #08b153;
+}
+
+.status-failed {
+    background-color: #d94c3d;
+}
+
+.status-canceled {
+    background-color: rgb(153, 153, 153);
+}
+
+.status-skipped {
+    background-color: rgb(153, 153, 153);
+}
+
+.pipelines-tile-summary {
+    font-size: 12px;
+    font-family: "OpenSans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333333;
 }
