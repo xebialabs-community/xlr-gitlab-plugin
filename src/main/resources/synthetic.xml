@@ -221,7 +221,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <type type="gitlab.TimelineTile" label="GitLab Timeline Tile" extends="xlrelease.Tile" description="Display a timeline of commits">
         <property default="release,folder,global" hidden="true" name="supportedScopes" kind="list_of_string" />
         <property name="uri" hidden="true" default="commits-timeline-summary.html" />
-        <property name="detailsUri" hidden="true" default="commits-timeline-detail.html" />
+        <property name="detailsUri" hidden="true" default="commits-detail.html" />
         <property name="title" description="Tile title." default="GitLab Commits Timeline" />
         <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci" />
         <property name="api_key" category="input" required="false" label="API Key" description="Optionally, override the API key used to connect with the GitLab server" />
