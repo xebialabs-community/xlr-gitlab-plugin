@@ -9,18 +9,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 -->
 <!DOCTYPE html>
 <html>
+
 <head>
     <script src="vendor/echarts.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <script
-            src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
     </script>
 </head>
 <script>
-    window.addEventListener("xlrelease.load", function () {
-        window.xlrelease.queryTileData(function (response) {
+    window.addEventListener("xlrelease.load", function() {
+        window.xlrelease.queryTileData(function(response) {
             var dates = response.data.data.dates;
             var commitsEachDay = response.data.data.commitsEachDay;
             var dom = document.getElementById("main");
@@ -31,7 +29,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             option = {
                 tooltip: {
                     trigger: 'axis',
-                    position: function (pt) {
+                    position: function(pt) {
                         return [pt[0], '10%'];
                     }
                 },
@@ -76,28 +74,26 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                         shadowOffsetY: 2
                     }
                 }],
-                series: [
-                    {
-                        name:'Commits',
-                        type:'line',
-                        smooth:true,
-                        symbol: 'none',
-                        sampling: 'average',
-                        itemStyle: {
+                series: [{
+                    name: 'Commits',
+                    type: 'line',
+                    smooth: true,
+                    symbol: 'none',
+                    sampling: 'average',
+                    itemStyle: {
+                        color: 'rgb(255, 70, 131)'
+                    },
+                    areaStyle: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: 'rgb(255, 158, 68)'
+                        }, {
+                            offset: 1,
                             color: 'rgb(255, 70, 131)'
-                        },
-                        areaStyle: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                                offset: 0,
-                                color: 'rgb(255, 158, 68)'
-                            }, {
-                                offset: 1,
-                                color: 'rgb(255, 70, 131)'
-                            }])
-                        },
-                        data: commitsEachDay
-                    }
-                ]
+                        }])
+                    },
+                    data: commitsEachDay
+                }]
             };
             if (option && typeof option === "object") {
                 myChart.setOption(option, true);
@@ -105,7 +101,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         });
     });
 </script>
+
 <body>
     <div id="main" style="width:100%;height:calc(100vh - 16px);"></div>
 </body>
+
 </html>

@@ -8,46 +8,45 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 -->
 <!DOCTYPE html>
 <html>
+
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="gitlab-tiles.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <script
-            src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
     </script>
 </head>
 <script>
-    window.addEventListener("xlrelease.load", function () {
-        window.xlrelease.queryTileData(function (response) {
+    window.addEventListener("xlrelease.load", function() {
+        window.xlrelease.queryTileData(function(response) {
             var pipelines = response.data.data.pipelines;
-            pipelines.forEach(function (pipeline) {
+            pipelines.forEach(function(pipeline) {
                 $("#pipelines").append(
                     '<tr>' +
                     '<td>' + pipeline.id + '</td>' +
                     '<td><div class="status status-' + pipeline.status + '">' + pipeline.status + '</div></td>' +
-                    '<td><a href="' + pipeline.web_url  + '">' + pipeline.web_url + '</a></td>' +
+                    '<td><a href="' + pipeline.web_url + '">' + pipeline.web_url + '</a></td>' +
                     '</tr>'
                 );
             })
         });
     });
 </script>
+
 <body>
-<div class="pipelines-tile-summary">
-<table class="table table-rounded table-striped">
-    <thead>
-    <tr>
-        <th>Pipeline ID</th>
-        <th>Status</th>
-        <th>URL</th>
-    </tr>
-    </thead>
-    <tbody id="pipelines">
-    </tbody>
-</table>
-</div>
+    <div class="pipelines-tile-summary">
+        <table class="table table-rounded table-striped">
+            <thead>
+                <tr>
+                    <th>Pipeline ID</th>
+                    <th>Status</th>
+                    <th>URL</th>
+                </tr>
+            </thead>
+            <tbody id="pipelines">
+            </tbody>
+        </table>
+    </div>
 </body>
-  </html>
+
+</html>

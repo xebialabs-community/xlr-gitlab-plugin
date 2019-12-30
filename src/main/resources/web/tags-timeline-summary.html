@@ -9,18 +9,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 -->
 <!DOCTYPE html>
 <html>
+
 <head>
     <script src="vendor/echarts.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <script
-            src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
     </script>
 </head>
 <script>
-    window.addEventListener("xlrelease.load", function () {
-        window.xlrelease.queryTileData(function (response) {
+    window.addEventListener("xlrelease.load", function() {
+        window.xlrelease.queryTileData(function(response) {
             var dates = response.data.data.dates;
             var tagsEachDay = response.data.data.tagsEachDay;
             var tagNamesEachDay = response.data.data.tagNamesEachDay;
@@ -32,7 +30,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             option = {
                 tooltip: {
                     trigger: 'axis',
-                    position: function (pt) {
+                    position: function(pt) {
                         return [pt[0], '10%'];
                     },
                     formatter: '{b}<br/>{a0}: {c0}<br/>{a1}: {c1}',
@@ -79,11 +77,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                         shadowOffsetY: 2
                     }
                 }],
-                series: [
-                    {
-                        name:'Tags Count',
-                        type:'line',
-                        smooth:true,
+                series: [{
+                        name: 'Tags Count',
+                        type: 'line',
+                        smooth: true,
                         symbol: 'none',
                         sampling: 'average',
                         itemStyle: {
@@ -101,8 +98,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                         data: tagsEachDay
                     },
                     {
-                        name:'Tags List',
-                        type:'line',
+                        name: 'Tags List',
+                        type: 'line',
                         symbol: 'none',
                         itemStyle: {
                             opacity: 0
@@ -117,7 +114,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         });
     });
 </script>
+
 <body>
     <div id="main" style="width:100%;height:calc(100vh - 16px);"></div>
 </body>
+
 </html>

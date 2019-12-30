@@ -8,18 +8,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 -->
 <!DOCTYPE html>
 <html>
+
 <head>
     <script src="vendor/echarts.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <script
-            src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
     </script>
 </head>
 <script>
-    window.addEventListener("xlrelease.load", function () {
-        window.xlrelease.queryTileData(function (response) {
+    window.addEventListener("xlrelease.load", function() {
+        window.xlrelease.queryTileData(function(response) {
             var authors = response.data.data.authors;
             var committers = response.data.data.committers;
             var people = response.data.data.people;
@@ -39,10 +37,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                     x: 'left',
                     data: people
                 },
-                series: [
-                    {
-                        name:'Authors',
-                        type:'pie',
+                series: [{
+                        name: 'Authors',
+                        type: 'pie',
                         selectedMode: 'single',
                         radius: [0, '45%'],
                         label: {
@@ -53,8 +50,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                         data: authors
                     },
                     {
-                        name:'Committers',
-                        type:'pie',
+                        name: 'Committers',
+                        type: 'pie',
                         radius: ['60%', '82.5%'],
                         label: {
                             normal: {
@@ -71,7 +68,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         });
     });
 </script>
+
 <body>
     <div id="main" style="width:100%;height:calc(100vh - 16px);"></div>
 </body>
+
 </html>

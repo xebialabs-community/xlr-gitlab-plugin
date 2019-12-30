@@ -8,22 +8,19 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 -->
 <!DOCTYPE html>
 <html>
+
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="gitlab-tiles.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <script
-            src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
     </script>
 </head>
 <script>
-    window.addEventListener("xlrelease.load", function () {
-        window.xlrelease.queryTileData(function (response) {
+    window.addEventListener("xlrelease.load", function() {
+        window.xlrelease.queryTileData(function(response) {
             var commits = response.data.data.commits;
-            commits.forEach(function (commit) {
+            commits.forEach(function(commit) {
                 $("#commits").append(
                     '<tr>' +
                     '<td>' + commit.short_id + '</td>' +
@@ -37,20 +34,22 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         });
     });
 </script>
+
 <body>
-<div class="commits-tile-summary">
-<table class="table table-rounded table-striped">
-    <thead>
-    <tr>
-        <th style="width:15.71%;">Commit ID</th>
-        <th>Date</th>
-        <th>Committer</th>
-        <th style="width:31.42%;">Message</th>
-    </tr>
-    </thead>
-    <tbody id="commits">
-    </tbody>
-</table>
-</div>
+    <div class="commits-tile-summary">
+        <table class="table table-rounded table-striped">
+            <thead>
+                <tr>
+                    <th style="width:15.71%;">Commit ID</th>
+                    <th>Date</th>
+                    <th>Committer</th>
+                    <th style="width:31.42%;">Message</th>
+                </tr>
+            </thead>
+            <tbody id="commits">
+            </tbody>
+        </table>
+    </div>
 </body>
-  </html>
+
+</html>
