@@ -127,7 +127,7 @@ function contributionsSummary(response, id) {
                 data: committers
             }
         ]
-    };;
+    };
     if (option && typeof option === "object") {
         chart.setOption(option, true);
     }

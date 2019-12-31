@@ -11,10 +11,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <html>
 
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
-    </script>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans">
+    <link rel="stylesheet" href="vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="gitlab-tiles.css">
     <script>
         window.addEventListener("xlrelease.load", function() {
             window.xlrelease.queryTileData(function(response) {
@@ -25,16 +24,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                     } else {
                         var message = commit.message;
                     }
-                    $("#commits").append(
-                        `<tr>` +
-                        `<td>${commit.short_id}</td>` +
-                        `<td>${commit.authored_date}</td>` +
-                        `<td>${commit.author_name} (<a href="mailto:${commit.author_email}">${commit.author_email}</a>)</td>` +
-                        `<td>${commit.committed_date}</td>` +
-                        `<td>${commit.committer_name} (<a href="mailto:${commit.committer_email}">${commit.committer_email}</a>)</td>` +
-                        `<td>${message}</td>` +
-                        `</tr>`
-                    );
+                    document.getElementById("commits").innerHTML += `
+                        <tr>
+                        <td>${commit.short_id}</td>
+                        <td>${commit.authored_date}</td>
+                        <td>${commit.author_name} (<a href="mailto:${commit.author_email}">${commit.author_email}</a>)</td>
+                        <td>${commit.committed_date}</td>
+                        <td>${commit.committer_name} (<a href="mailto:${commit.committer_email}">${commit.committer_email}</a>)</td>
+                        <td>${message}</td>
+                        </tr>
+                    `;
                 })
             });
         });
