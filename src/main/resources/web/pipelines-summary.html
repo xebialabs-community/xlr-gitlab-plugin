@@ -22,7 +22,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                     document.getElementById("pipelines").innerHTML += `
                         <tr>
                         <td>${pipeline.id}</td>
-                        <td><div class="status status-${pipeline.status}">${pipeline.status}</div></td>
+                        <td><div class="status ${pipeline.status}">${pipeline.status}</div></td>
                         <td><a href="${pipeline.web_url}">${pipeline.web_url}</a></td>
                         </tr>
                     `;
@@ -33,19 +33,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 </head>
 
 <body>
-    <div class="pipelines-tile-summary">
-        <table class="table table-rounded table-striped">
-            <thead>
-                <tr>
-                    <th>Pipeline ID</th>
-                    <th>Status</th>
-                    <th>URL</th>
-                </tr>
-            </thead>
-            <tbody id="pipelines">
-            </tbody>
-        </table>
-    </div>
+    <table class="table table-rounded table-striped">
+        <thead>
+            <tr>
+                <th style="width: 25%;">Pipeline ID</th>
+                <th style="width: 25%;">Status</th>
+                <th style="width: 50%;">URL</th>
+            </tr>
+        </thead>
+        <tbody id="pipelines">
+        </tbody>
+    </table>
 </body>
 
 </html>

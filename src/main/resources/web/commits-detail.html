@@ -19,22 +19,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             window.xlrelease.queryTileData(function(response) {
                 var commits = response.data.data.commits;
                 commits.forEach(function(commit) {
-                    if (commit.message.length > 64) {
-                        var message = commit.message.substring(0, 61).concat('...');
-                    } else {
-                        var message = commit.message;
-                    }
                     document.getElementById("commits").innerHTML += `
                         <tr>
                         <td>${commit.short_id}</td>
-                        <td class="commit-datetime">${commit.authored_date}</td>
+                        <td>${commit.authored_date}</td>
                         <td>${commit.author_name} (<a href="mailto:${commit.author_email}">${commit.author_email}</a>)</td>
-                        <td class="commit-datetime">${commit.committed_date}</td>
+                        <td>${commit.committed_date}</td>
                         <td>${commit.committer_name} (<a href="mailto:${commit.committer_email}">${commit.committer_email}</a>)</td>
-                        <td>${message}</td>
+                        <td>${commit.message}</td>
                         </tr>
                     `;
-                });
+                })
             });
         });
     </script>
@@ -44,12 +39,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <table class="table table-rounded table-striped">
         <thead>
             <tr>
-                <th>Commit&nbsp;ID</th>
-                <th>Authored Date</th>
-                <th>Author</th>
-                <th>Committed Date</th>
-                <th>Committer</th>
-                <th>Message</th>
+                <th style="width: 10%;">Commit&nbsp;ID</th>
+                <th style="width: 15%;">Authored Date</th>
+                <th style="width: 15%;">Author</th>
+                <th style="width: 15%;">Committed Date</th>
+                <th style="width: 15%;">Committer</th>
+                <th style="width: 30%;">Message</th>
             </tr>
         </thead>
         <tbody id="commits">

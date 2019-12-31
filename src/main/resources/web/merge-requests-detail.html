@@ -19,7 +19,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             window.xlrelease.queryTileData(function(response) {
                 var merge_requests = response.data.data.merge_requests;
                 merge_requests.forEach(function(mergeData) {
-                    document.getElementById("merge_requests").innerHTML += `
+                    document.getElementById("merge-requests").innerHTML += `
                         <tr>
                         <td><a href="${mergeData.web_url}" target="_blank_">${mergeData.title}</a></td>
                         <td>${mergeData.id}</td>
@@ -41,17 +41,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <table class="table table-rounded table-striped">
         <thead>
             <tr>
-                <th>Merge Title</th>
-                <th>ID</th>
-                <th>State</th>
-                <th>Author</th>
-                <th>Source Branch</th>
-                <th>Target Branch</th>
-                <th>Source Project ID</th>
-                <th>Target Project ID</th>
+                <th style="width: 22%;">Merge Title</th>
+                <th style="width: 10%;">ID</th>
+                <th style="width: 12%;">State</th>
+                <th style="width: 12%;">Author</th>
+                <th style="width: 12%;">Source Branch</th>
+                <th style="width: 12%;">Target Branch</th>
+                <th style="width: 10%;">Source Project ID</th>
+                <th style="width: 10%;">Target Project ID</th>
             </tr>
         </thead>
-        <tbody id="merge_requests">
+        <tbody id="merge-requests">
         </tbody>
     </table>
 </body>
