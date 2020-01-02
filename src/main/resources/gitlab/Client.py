@@ -11,10 +11,9 @@
 import json
 from xlrelease.HttpRequest import HttpRequest
 
+PAGE_SIZE = 100
 
 class Client(object):
-    PAGE_SIZE = 100
-
     def __init__(self):
         return
 
@@ -159,12 +158,12 @@ class Client(object):
         merge_requests = []
         # Calculate page sizes using max PAGE_SIZE results per page (GitLab limit) and the user-specified results_limit
         result_set_sizes = [
-            min(variables["results_limit"] - i, self.PAGE_SIZE)
-            for i in range(0, variables["results_limit"], self.PAGE_SIZE)
+            min(variables["results_limit"] - i, PAGE_SIZE)
+            for i in range(0, variables["results_limit"], PAGE_SIZE)
         ]
         for page_num, result_set_size in enumerate(result_set_sizes, 1):
             endpoint_page = endpoint + "&per_page={0}&page={1}".format(
-                self.PAGE_SIZE, page_num
+                PAGE_SIZE, page_num
             )
             response = Client.get_request(variables).get(endpoint_page)
             merge_requests_set = Client.handle_response(response)
@@ -322,12 +321,12 @@ class Client(object):
         commits = []
         # Calculate page sizes using max PAGE_SIZE results per page (GitLab limit) and the user-specified results_limit
         result_set_sizes = [
-            min(variables["results_limit"] - i, self.PAGE_SIZE)
-            for i in range(0, variables["results_limit"], self.PAGE_SIZE)
+            min(variables["results_limit"] - i, PAGE_SIZE)
+            for i in range(0, variables["results_limit"], PAGE_SIZE)
         ]
         for page_num, result_set_size in enumerate(result_set_sizes, 1):
             endpoint_page = endpoint + "&per_page={0}&page={1}".format(
-                self.PAGE_SIZE, page_num
+                PAGE_SIZE, page_num
             )
             response = Client.get_request(variables).get(endpoint_page)
             commits_set = Client.handle_response(response)
@@ -348,12 +347,12 @@ class Client(object):
         tags = []
         # Calculate page sizes using max PAGE_SIZE results per page (GitLab limit) and the user-specified results_limit
         result_set_sizes = [
-            min(variables["results_limit"] - i, self.PAGE_SIZE)
-            for i in range(0, variables["results_limit"], self.PAGE_SIZE)
+            min(variables["results_limit"] - i, PAGE_SIZE)
+            for i in range(0, variables["results_limit"], PAGE_SIZE)
         ]
         for page_num, result_set_size in enumerate(result_set_sizes, 1):
             endpoint_page = endpoint + "&per_page={0}&page={1}".format(
-                self.PAGE_SIZE, page_num
+                PAGE_SIZE, page_num
             )
             response = Client.get_request(variables).get(endpoint_page)
             tags_set = Client.handle_response(response)
