@@ -12,7 +12,7 @@ function commitsTimelineSummary(response, id) {
     var commitsEachDay = response.data.data.commitsEachDay;
     var dom = document.getElementById(id);
     var chart = echarts.init(dom);
-    option = {
+    var option = {
         tooltip: {
             trigger: 'axis',
             position: function(pt) {
@@ -92,7 +92,7 @@ function contributionsSummary(response, id) {
     var people = response.data.data.people;
     var dom = document.getElementById(id);
     var chart = echarts.init(dom);
-    option = {
+    var option = {
         tooltip: {
             trigger: 'item',
             formatter: "{a} <br/>{b}: {c} Commit(s) ({d}%)"
@@ -139,7 +139,7 @@ function tagsTimelineSummary(response, id) {
     var tagNamesEachDay = response.data.data.tagNamesEachDay;
     var dom = document.getElementById(id);
     var chart = echarts.init(dom);
-    option = {
+    var option = {
         tooltip: {
             trigger: 'axis',
             position: function(pt) {
