@@ -8,9 +8,10 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <title>Commits - Details View</title>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans">
     <link rel="stylesheet" href="vendor/bootstrap.min.css">
     <link rel="stylesheet" href="gitlab-tiles.css">
@@ -36,15 +37,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 </head>
 
 <body>
-    <table class="table table-rounded table-striped">
+    <table class="table table-rounded table-striped" aria-describedby="Author and committer information for recent code commits">
         <thead>
             <tr>
-                <th style="width: 10%;">Commit&nbsp;ID</th>
-                <th style="width: 15%;">Authored Date</th>
-                <th style="width: 15%;">Author</th>
-                <th style="width: 15%;">Committed Date</th>
-                <th style="width: 15%;">Committer</th>
-                <th style="width: 30%;">Message</th>
+                <th scope="col" style="width: 10%;">Commit&nbsp;ID</th>
+                <th scope="col" style="width: 15%;">Authored Date</th>
+                <th scope="col" style="width: 15%;">Author</th>
+                <th scope="col" style="width: 15%;">Committed Date</th>
+                <th scope="col" style="width: 15%;">Committer</th>
+                <th scope="col" style="width: 30%;">Message</th>
             </tr>
         </thead>
         <tbody id="commits">

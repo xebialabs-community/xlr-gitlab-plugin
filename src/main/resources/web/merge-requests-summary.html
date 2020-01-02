@@ -8,9 +8,10 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <title>Merge Requests - Summary View</title>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans">
     <link rel="stylesheet" href="gitlab-tiles.css">
     <script>
@@ -38,17 +39,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 <body>
     <div id="summary" class="merge-requests">
-        <table>
+        <table aria-describedby="Total count of merge requests by state">
             <tr>
-                <td class="label">Opened</td>
+                <th scope="row" class="label">Opened</th>
                 <td class="value" id="opened"></td>
             </tr>
             <tr>
-                <td class="label bordered">Merged</td>
+                <th scope="row" class="label bordered">Merged</th>
                 <td class="value bordered" id="merged"></td>
             </tr>
             <tr>
-                <td class="label bordered">Closed</td>
+                <th scope="row" class="label bordered">Closed</th>
                 <td class="value bordered" id="closed"></td>
             </tr>
         </table>
