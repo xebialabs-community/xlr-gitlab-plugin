@@ -215,13 +215,8 @@ class Client(object):
         endpoint = "/api/v4/projects/{0}/ref/{1}/trigger/pipeline?token={2}".format(
             variables["project_id"], variables["ref"], variables["token"]
         )
-        pipeline_variable = variables["variables"]
-        if len(pipeline_variable) > 0:
-            entries = []
-            for key, value in pipeline_variable.iteritems():
-                entries.append("variables[{0}]={1}".format(key, value))
-            variables_parameters = "&".join(entries)
-            endpoint = endpoint + "&" + variables_parameters
+        for key, value in variables["variables"].iteritems():
+            endpoint += "&variables[{0}]={1}".format(key, value)
 
         print "* gitlab_triggerpipeline.endpoint: {0}".format(endpoint)
         data = Client.handle_response(

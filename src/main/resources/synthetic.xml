@@ -16,11 +16,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="scriptLocation" default="gitlab/pipeline.py" hidden="true" />
         <property name="project_id" category="input" required="true" label="Project ID" />
         <property name="ref" category="input" required="true" />
-        <property name="token" category="input" required="true" password="true" />
-        <property name="variables" category="input" required="true" kind="map_string_string" />
+        <property name="token" category="input" required="true" password="true"
+                  description="The token for the pipeline trigger.  This is not the same as the GitLab API access token." />
+        <property name="variables" category="input" required="false" kind="map_string_string" />
         <property name="pipeline_id" category="output" label="Pipeline ID" />
-        <property name="pipeline_status" category="output" />
-        <property name="pipeline_web_url" category="output" />
+        <property name="pipeline_status" category="output" label="Pipeline Status" />
+        <property name="pipeline_web_url" category="output" label="Pipeline Web URL" />
     </type>
 
     <type type="gitlab.Task" extends="xlrelease.PythonScript" virtual="true">
