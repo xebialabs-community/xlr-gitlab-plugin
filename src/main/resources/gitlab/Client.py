@@ -130,15 +130,8 @@ class Client(object):
 
     @staticmethod
     def gitlab_querysecuredata(variables):
-        data = Client.handle_response(
-            Client.get_request(variables).get(
-                "{0}?private_token={1}".format(
-                    variables["endpoint"], Client.get_gitlab_api_key(variables),
-                )
-            )
-        )
-        jsoncontext = JsonPath.parse(data)
-        return {"value": str(jsoncontext.read(variables["path_spec"]))}
+        # The returned value is handled as a password in the XLR user interface, but the API call is the same as gitlab_querydata
+        return Client.gitlab_querydata(variables)
 
     @staticmethod
     def gitlab_queryproject(variables):
