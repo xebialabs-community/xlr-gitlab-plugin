@@ -10,6 +10,7 @@
 
 import json
 from xlrelease.HttpRequest import HttpRequest
+from com.jayway.jsonpath import JsonPath
 
 PAGE_SIZE = 100
 
@@ -114,6 +115,30 @@ class Client(object):
             if namespace in project["name_with_namespace"]:
                 return {"project_id": str(project["id"])}
         return {"project_id": ""}
+
+    @staticmethod
+    def gitlab_querydata(variables):
+        data = Client.handle_response(
+            Client.get_request(variables).get(
+                "{0}?private_token={1}".format(
+                    variables["endpoint"], Client.get_gitlab_api_key(variables),
+                )
+            )
+        )
+        jsoncontext = JsonPath.parse(data)
+        return {"value": str(jsoncontext.read(variables["path_spec"]))}
+
+    @staticmethod
+    def gitlab_querysecuredata(variables):
+        data = Client.handle_response(
+            Client.get_request(variables).get(
+                "{0}?private_token={1}".format(
+                    variables["endpoint"], Client.get_gitlab_api_key(variables),
+                )
+            )
+        )
+        jsoncontext = JsonPath.parse(data)
+        return {"value": str(jsoncontext.read(variables["path_spec"]))}
 
     @staticmethod
     def gitlab_queryproject(variables):

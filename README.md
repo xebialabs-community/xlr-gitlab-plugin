@@ -27,6 +27,8 @@ The xlr-gitlab-plugin provides the following XL Release functionality:
   * Create a project webhook
   * Create a group
   * Trigger a pipeline
+  * Query Data
+  * Query Secure Data
 
 ### Triggers
   * Commit Trigger
@@ -138,6 +140,16 @@ The xlr-gitlab-plugin provides the following XL Release functionality:
 
 #### Trigger Pipeline
 ![Trigger Pipeline](images/trigger_pipeline.png)
+
+#### Query Data
+This task enables pulling a text value from any GET method Gitlab API endpoint.  A JSON path expression should be supplied, to identify the value of interest.
+
+![Query Data](images/query_data.png)
+
+#### Query Secure Data
+This task enables pulling a secret value from any GET method Gitlab API endpoint.  A JSON path expression should be supplied, to identify the value of interest.  This task is the same as Query Data, except the output value is saved as a XL Release password variable.
+
+![Query Data](images/query_secure_data.png)
 
 ## Webhooks
 
