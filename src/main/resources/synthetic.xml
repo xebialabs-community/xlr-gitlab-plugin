@@ -84,7 +84,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="endpoint" category="input" required="true" label="API Endpoint"
                   description="URI for the API endpoint - for example /api/v4/projects/1/triggers.  Do not include URL parameters."/>
         <property name="path_spec" category="input" required="true" label="JSON Path"
-                  description="The JSON path expression for locating the value of interest"
+                  description="The JSON path expression for locating the value of interest"/>
         <property name="value" category="output" label="Value" />
     </type>
 
