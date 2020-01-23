@@ -14,6 +14,7 @@ from com.jayway.jsonpath import JsonPath
 
 PAGE_SIZE = 100
 
+
 class Client(object):
     def __init__(self):
         return
