@@ -11,7 +11,22 @@
 [xlr-gitlab-plugin-license-url]: https://opensource.org/licenses/MIT
 [xlr-gitlab-plugin-downloads-image]: https://img.shields.io/github/downloads/xebialabs-community/xlr-gitlab-plugin/total.svg
 
-## Preface
+## Table of Contents
++ [Background](#background)
++ [Installation](#installation)
+  + [Requirements](#requirements)
+  + [Building the plugin](#building-the-plugin)
+  + [Adding the plugin to XL Release](#adding-the-plugin-to-xl-release)
++ [Usage](#usage)
+  + [Configuration](#configuration)
+  + [Tasks](#tasks)
+  + [Webhooks](#webhooks)
+  + [Triggers](#triggers)
+  + [Tiles](#tiles)
++ [Contributing](#contributing)
++ [License](#license)
+
+## Background
 This document describes the functionality provided by the xlr-gitlab-plugin.
 
 Please see the [XL Release Documentation](https://docs.xebialabs.com/xl-release/) for background information on XL Release and release concepts.
@@ -229,11 +244,11 @@ Properties:
 
 ![Trigger Pipeline](images/trigger_pipeline.png)
 
-## Webhooks
+### Webhooks
 
-### Code Commit/Push Webhook
+#### Code Commit/Push Webhook
 
-#### Gitlab Webhook Configuration
+##### Gitlab Webhook Configuration
 
 Here's the URL Format :
 ```
@@ -242,26 +257,26 @@ http://username:password@xlrserver:port/api/extension/gitlab/commit_webhook?temp
 
 ![Gitlab Webhook Configuration](images/commit_webhook_configure.png)
 
-#### Release Summary view in XL Release
+##### Release Summary view in XL Release
 ![Release Summary view in XL Release](images/commit_webhook_release.png)
 
-#### Release Variables created
+##### Release Variables created
 ![Release Variables created](images/commit_webhook_variables.png)
 
 
-### Merge Pull Request Webhook
+#### Merge Pull Request Webhook
 
-#### Gitlab Webhook Configuration
+##### Gitlab Webhook Configuration
 ```
 http://username:password@xlrserver:port/api/extension/gitlab/pr_webhook?template=<templateName/prefix>
 ```
 
 ![Gitlab Webhook Configuration](images/pr_webhook_configure.png)
 
-#### Release Summary view in XL Release
+##### Release Summary view in XL Release
 ![Release Summary view in XL Release](images/pr_webhook_release.png)
 
-#### Release Variables created
+##### Release Variables created
 ![Release Variables created](images/pr_webhook_variables.png)
 
 ### Triggers
