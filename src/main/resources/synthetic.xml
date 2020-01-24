@@ -10,7 +10,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <synthetic xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd" xmlns="http://www.xebialabs.com/deployit/synthetic" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
     <type type="gitlab.Server" extends="configuration.HttpConnection">
-        <property name="api_key" required="true" label="API Key" password="true" />
+        <property name="api_key" required="true" label="API Token" password="true" description="A personal access token for the GitLab API.  Token scopes should be set based on the desired orchestration." />
     </type>
 
     <!-- Task Configurations -->
@@ -20,26 +20,26 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="iconLocation" default="gitlab/gitlab.png" hidden="true" />
         <property name="taskColor" hidden="true" default="#6B4FBB" />
         <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci" />
-        <property name="api_key" category="input" required="false" label="API Key" password="true" description="Optional override Server API Key." />
+        <property name="api_key" category="input" required="false" label="API Key" password="true" description="Optionally, override the GitLab Server configuration API token." />
     </type>
 
     <type type="gitlab.AcceptMergeRequest" extends="gitlab.Task">
-        <property name="project_id" category="input" label="Project ID" />
-        <property name="merge_id" category="input" label="Merge ID" />
+        <property name="project_id" category="input" label="Project ID" description="This is visible in the GUI and should be an integer" />
+        <property name="merge_id" category="input" label="Merge ID" description="This is visible in the GUI and should be an integer" />
     </type>
 
     <type type="gitlab.CreateBranch" extends="gitlab.Task">
-        <property name="project_id" category="input" required="true" label="Project ID" />
+        <property name="project_id" category="input" required="true" label="Project ID" description="This is visible in the GUI and should be an integer" />
         <property name="branch" category="input" required="true" label="New Branch Name" />
-        <property name="ref" category="input" required="true" label="Reference" description="Branch name or commit SHA to create branch from" />
-        <property name="commit_id" category="output" label="Commit Source" description="Commit ID used to generate the new branch" />
+        <property name="ref" category="input" required="true" label="Reference" description="Branch name or commit hash to the create branch from" />
+        <property name="commit_id" category="output" label="Commit Source" description="Commit hash used to generate the new branch" />
     </type>
 
     <type type="gitlab.CreateGroup" extends="gitlab.Task">
         <property name="group_name" category="input" label="Group Name" required="true" />
-        <property name="path" category="input" required="true" />
-        <property name="description" kind="string" size="large" category="input" required="false" />
-        <property name="visibility" category="input" kind="enum" required="true" description="Group visibility">
+        <property name="path" category="input" label="Group Path" required="true" />
+        <property name="description" kind="string" label="Group Description" size="large" category="input" required="false" />
+        <property name="visibility" category="input" label="Group Visibility" kind="enum" required="true">
             <enum-values>
                 <value label="Public">public</value>
                 <value label="Internal">internal</value>
@@ -50,21 +50,21 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     </type>
 
     <type type="gitlab.CreateMergeRequest" extends="gitlab.Task">
-        <property name="project_id" category="input" required="true" label="Project ID" />
+        <property name="project_id" category="input" required="true" label="Project ID" description="This is visible in the GUI and should be an integer" />
         <property name="source_branch" category="input" required="true" label="Source Branch" />
         <property name="target_branch" category="input" required="true" label="Target Branch" />
-        <property name="title" category="input" required="true" label="Merge Title" />
+        <property name="title" category="input" required="true" label="Merge Request Title" />
         <property name="target_project_id" category="input" required="false" label="Target Project ID" />
-        <property name="merge_id" category="output" label="Merge ID" />
+        <property name="merge_id" category="output" label="Merge Request ID" />
     </type>
 
     <type type="gitlab.CreateProject" extends="gitlab.Task">
         <property name="project_name" category="input" label="Project Name" required="true" />
-        <property name="path" category="input" required="true" />
-        <property name="namespace" category="input" required="false" description="Namespace ID - will default to the configuration user namespace if not provided" />
-        <property name="description" kind="string" size="large" category="input" required="false" />
-        <property name="import_url" category="input" label="Import URL" required="false" description="Note: If your HTTP repository is not publicly accessible, add authentication information to the URL (e.g. https://username:password@gitlab.company.com/group/project.git)" />
-        <property name="visibility" category="input" kind="enum" required="true" description="Project visibility">
+        <property name="path" category="input" label="Project Path" required="true" />
+        <property name="namespace" category="input" required="false" description="Namespace ID for the project.  This will default to the configuration user namespace if not provided" />
+        <property name="description" kind="string" label="Project Description" size="large" category="input" required="false" />
+        <property name="import_url" category="input" label="Import URL" required="false" description="Note: If your HTTP repository is not publicly accessible, then add authentication information to the URL (e.g. https://username:password@gitlab.company.com/group/project.git)" />
+        <property name="visibility" category="input" kind="enum" required="true" label="Project Visibility">
             <enum-values>
                 <value label="Public">public</value>
                 <value label="Internal">internal</value>
@@ -75,8 +75,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     </type>
 
     <type type="gitlab.CreateProjectWebhook" extends="gitlab.Task">
-        <property name="project_id" category="input" required="true" label="Project ID" />
-        <property name="url" category="input" required="true" label="URL" description="The hook URL" />
+        <property name="project_id" category="input" required="true" label="Project ID" description="This is visible in the GUI and should be an integer" />
+        <property name="url" category="input" required="true" label="URL" description="The webhook URL" />
         <property name="push_events" category="input" kind="boolean" required="false" label="Push Events" description="Trigger hook on push events" />
         <property name="issues_events" category="input" kind="boolean" required="false" label="Issues Events" description="Trigger hook on issues events" />
         <property name="confidential_issues_events" category="input" kind="boolean" required="false" label="Confidential Issues Events" description="Trigger hook on confidential issues events" />
@@ -92,28 +92,28 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     </type>
 
     <type type="gitlab.CreateTag" extends="gitlab.Task">
-        <property name="project_id" category="input" required="true" label="Project ID" />
-        <property name="ref" category="input" required="true" label="Reference" description="Commit SHA, another tag name, or branch name" />
+        <property name="project_id" category="input" required="true" label="Project ID" description="This is visible in the GUI and should be an integer" />
+        <property name="ref" category="input" required="true" label="Reference" description="Commit hash, another tag name, or branch name from which to create the tag" />
         <property name="tag_name" category="input" required="true" label="Tag Name" />
         <property name="message" category="input" required="false" label="Message" description="An optional description for the tag" />
-        <property name="commit_id" category="output" label="Commit ID" description="The ID of the Commit related to the tag" />
+        <property name="commit_id" category="output" label="Commit ID" description="The hash of the commit for the tag" />
     </type>
 
     <type type="gitlab.QueryCommits" extends="gitlab.Task">
-        <property name="project_id" category="input" required="true" label="Project ID" />
+        <property name="project_id" category="input" required="true" label="Project ID" description="This is visible in the GUI and should be an integer" />
         <property name="branch" category="input" required="false" label="Branch Name" description="If not provided, the default branch will be used" />
-        <property name="results_limit" category="input" kind="integer" required="true" label="Results Limit" default="100" description="Upper limit on the number of commits to return from the query." />
+        <property name="results_limit" category="input" kind="integer" required="true" label="Results Limit" default="100" description="Upper limit on the number of commits to return from the query" />
         <property name="commits" category="output" />
     </type>
 
     <type type="gitlab.QueryData" extends="gitlab.Task">
-        <property name="endpoint" category="input" required="true" label="API Endpoint URI" description="URI for the API endpoint - for example /api/v4/projects/1/triggers.  Do not include URL parameters." />
+        <property name="endpoint" category="input" required="true" label="API Endpoint URI" description="URI for the API endpoint - for example /api/v4/projects/1/triggers.  Do not include URL parameters" />
         <property name="path_spec" category="input" required="true" label="JSON Path" description="The JSON path expression for locating the value of interest" />
         <property name="value" category="output" label="Value" />
     </type>
 
     <type type="gitlab.QueryMergeRequests" extends="gitlab.Task">
-        <property name="project_id" category="input" required="true" label="Project ID" />
+        <property name="project_id" category="input" required="true" label="Project ID" description="This is visible in the GUI and should be an integer" />
         <property name="results_limit" category="input" kind="integer" required="true" label="Results Limit" default="100" description="Upper limit on the number of pull requests to return from the query." />
         <property name="sorting" category="input" kind="enum" required="true" label="Sorting" description="Approach for sorting query results" default="Creation Datetime Descending">
             <enum-values>
@@ -140,7 +140,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     </type>
 
     <type type="gitlab.QueryPipelines" extends="gitlab.Task">
-        <property name="project_id" category="input" required="true" label="Project ID" />
+        <property name="project_id" category="input" required="true" label="Project ID" description="This is visible in the GUI and should be an integer" />
         <property name="pipelines" category="output" />
     </type>
 
@@ -157,7 +157,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     </type>
 
     <type type="gitlab.QueryTags" extends="gitlab.Task">
-        <property name="project_id" category="input" required="true" label="Project ID" />
+        <property name="project_id" category="input" required="true" label="Project ID" description="This is visible in the GUI and should be an integer" />
         <property name="search" kind="string" category="Repository" required="false" description="Optionally, specify a search to filter what tags will be processed.  This uses the standard GitLab tags search criteria, so consult GitLab documentation on the syntax" />
         <property name="results_limit" category="input" kind="integer" required="true" label="Results Limit" default="100" description="Upper limit on the number of tags to return from the query." />
         <property name="tags" category="output" />
@@ -165,10 +165,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
     <type type="gitlab.TriggerPipeline" extends="gitlab.Task">
         <property name="scriptLocation" default="gitlab/pipeline.py" hidden="true" />
-        <property name="project_id" category="input" required="true" label="Project ID" />
-        <property name="ref" category="input" required="true" />
+        <property name="project_id" category="input" required="true" label="Project ID" description="This is visible in the GUI and should be an integer" />
+        <property name="ref" category="input" required="true" description="Commit hash, tag name, or branch name from which to trigger the pipeline" />
         <property name="token" category="input" required="true" password="true" description="The token for the pipeline trigger.  This is not the same as the GitLab API access token." />
-        <property name="variables" category="input" required="false" kind="map_string_string" />
+        <property name="variables" category="input" required="false" kind="map_string_string" description="Optionally, provide variables to the pipeline execution" />
         <property name="pipeline_id" category="output" label="Pipeline ID" />
         <property name="pipeline_status" category="output" label="Pipeline Status" />
         <property name="pipeline_web_url" category="output" label="Pipeline Web URL" />
@@ -176,23 +176,23 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
     <!-- Trigger Configurations -->
 
-    <type type="gitlab.CommitTrigger" extends="xlrelease.ReleaseTrigger" description="Listens to a GitLab repository for fresh code commit ">
+    <type type="gitlab.CommitTrigger" extends="xlrelease.ReleaseTrigger" description="Listens to a GitLab repository for fresh code commits ">
         <property name="scriptLocation" default="gitlab/CommitTrigger.py" hidden="true" />
         <!-- repository -->
         <property name="gitlab_server" label="GitLab Server" category="Repository" referenced-type="gitlab.Server" kind="ci" />
-        <property name="api_key" label="API Key" category="Repository" default="" required="false" description="Optionally, provide an API token to override the global server configuration" />
+        <property name="api_key" label="API Key" category="Repository" default="" required="false" description="Optionally, provide an API token to override the server configuration" />
         <property name="project_id" label="Project ID" kind="integer" category="Repository" required="true" description="GitLab project to monitor - should be an integer" />
         <property name="branchName" kind="string" category="Repository" required="false" description="Optionally, specify a branch name if only listening for commits on a single branch" />
         <!-- output variables -->
-        <property name="commitId" category="variables" required="false" description="Id of the commit." />
-        <property name="branch" category="variables" required="false" description="Branch where the commit occurred." />
+        <property name="commitId" category="variables" required="false" description="Commit hash" />
+        <property name="branch" category="variables" required="false" description="Branch where the commit occurred" />
     </type>
 
     <type type="gitlab.TagTrigger" extends="xlrelease.ReleaseTrigger" description="Listens to a GitLab repository for new tags">
         <property name="scriptLocation" default="gitlab/TagTrigger.py" hidden="true" />
         <!-- repository -->
         <property name="gitlab_server" label="GitLab Server" category="Repository" referenced-type="gitlab.Server" kind="ci" />
-        <property name="api_key" label="API Key" category="Repository" default="" required="false" description="Optionally, provide an API token to override the global server configuration" />
+        <property name="api_key" label="API Key" category="Repository" default="" required="false" description="Optionally, provide an API token to override the server configuration" />
         <property name="project_id" label="Project ID" kind="integer" category="Repository" required="true" description="GitLab project to monitor - should be an integer" />
         <property name="search" kind="string" category="Repository" required="false" description="Optionally, specify a search to filter what tags will be processed.  This uses the standard GitLab tags search criteria, so consult GitLab documentation on the syntax" />
         <!-- output variables -->
@@ -216,8 +216,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="detailsUri" hidden="true" default="commits-detail.html" />
         <property name="title" description="Tile title." default="GitLab Commits Summary" />
         <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci" />
-        <property name="api_key" category="input" required="false" label="API Key" />
-        <property name="project_id" category="input" required="true" label="Project ID" />
+        <property name="api_key" category="input" required="false" label="API Key" description="Optionally, provide an API token to override the server configuration" />
+        <property name="project_id" category="input" required="true" label="Project ID" description="This is visible in the GUI and should be an integer" />
         <property name="branch" category="input" required="false" label="Branch Name" description="If not provided, the default branch will be used" />
         <property name="results_limit" category="input" kind="integer" required="true" label="Results Limit" default="100" description="Upper limit on the number of pull requests to return from the query." />
     </type>
@@ -228,8 +228,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="detailsUri" hidden="true" default="commits-detail.html" />
         <property name="title" description="Tile title." default="GitLab Contributions Summary" />
         <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci" />
-        <property name="api_key" category="input" required="false" label="API Key" />
-        <property name="project_id" category="input" required="true" label="Project ID" />
+        <property name="api_key" category="input" required="false" label="API Key" description="Optionally, provide an API token to override the server configuration" />
+        <property name="project_id" category="input" required="true" label="Project ID" description="This is visible in the GUI and should be an integer" />
         <property name="branch" category="input" required="false" label="Branch Name" description="If not provided, the default branch will be used" />
         <property name="results_limit" category="input" kind="integer" required="true" label="Results Limit" default="100" description="Upper limit on the number of pull requests to return from the query." />
     </type>
@@ -240,7 +240,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="detailsUri" hidden="true" default="merge-requests-detail.html" />
         <property name="title" description="Tile title." default="GitLab Merge Requests Summary" />
         <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci" />
-        <property name="project_id" category="input" required="true" label="Project ID" />
+        <property name="api_key" category="input" required="false" label="API Key" description="Optionally, provide an API token to override the server configuration" />
+        <property name="project_id" category="input" required="true" label="Project ID" description="This is visible in the GUI and should be an integer" />
         <property name="results_limit" category="input" kind="integer" required="true" label="Results Limit" default="100" description="Upper limit on the number of pull requests to return from the query." />
         <property name="sorting" category="input" kind="enum" required="true" label="Sorting" default="Creation Datetime Descending" hidden="true" description="Approach for sorting query results">
             <enum-values>
@@ -263,7 +264,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                 <value label="All">all</value>
             </enum-values>
         </property>
-        <property name="api_key" category="input" required="false" label="API Key" />
     </type>
 
     <type type="gitlab.PipelinesTile" label="GitLab Pipelines Tile" extends="xlrelease.Tile" description="Display a list of the latest pipeline executions, including status information and a direct link">
@@ -272,8 +272,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="detailsUri" hidden="true" default="pipelines-detail.html" />
         <property name="title" description="Tile title." default="GitLab Pipelines Summary" />
         <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci" />
-        <property name="api_key" category="input" required="false" label="API Key" />
-        <property name="project_id" category="input" required="true" label="Project ID" />
+        <property name="api_key" category="input" required="false" label="API Key" description="Optionally, provide an API token to override the server configuration" />
+        <property name="project_id" category="input" required="true" label="Project ID" description="This is visible in the GUI and should be an integer" />
     </type>
 
     <type type="gitlab.TagsTimelineTile" label="GitLab Tags Timeline Tile" extends="xlrelease.Tile" description="Display a timeline of tags">
@@ -282,8 +282,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="detailsUri" hidden="true" default="tags-timeline-detail.html" />
         <property name="title" description="Tile title." default="GitLab Tags Timeline" />
         <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci" />
-        <property name="api_key" category="input" required="false" label="API Key" description="Optionally, override the API key used to connect with the GitLab server" />
-        <property name="project_id" category="input" required="true" label="Project ID" />
+        <property name="api_key" category="input" required="false" label="API Key" description="Optionally, provide an API token to override the server configuration" />
+        <property name="project_id" category="input" required="true" label="Project ID" description="This is visible in the GUI and should be an integer" />
         <property name="search" category="input" required="false" description="Optionally, specify a search to filter the tags.  This uses the standard GitLab tags search criteria, so consult GitLab documentation on the syntax" />
         <property name="results_limit" category="input" kind="integer" required="true" label="Results Limit" default="100" description="Upper limit on the count of latest tags to return from the query." />
     </type>
@@ -294,8 +294,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <property name="detailsUri" hidden="true" default="commits-detail.html" />
         <property name="title" description="Tile title." default="GitLab Commits Timeline" />
         <property name="gitlab_server" category="input" label="GitLab Server" referenced-type="gitlab.Server" kind="ci" />
-        <property name="api_key" category="input" required="false" label="API Key" description="Optionally, override the API key used to connect with the GitLab server" />
-        <property name="project_id" category="input" required="true" label="Project ID" />
+        <property name="api_key" category="input" required="false" label="API Key" description="Optionally, provide an API token to override the server configuration" />
+        <property name="project_id" category="input" required="true" label="Project ID" description="This is visible in the GUI and should be an integer" />
         <property name="branch" category="input" required="false" label="Branch Name" description="If not provided, the default branch will be used" />
         <property name="results_limit" category="input" kind="integer" required="true" label="Results Limit" default="100" description="Upper limit on the number of pull requests to return from the query." />
     </type>
