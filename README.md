@@ -374,6 +374,6 @@ Please review the contributing guidelines for _xebialabs-community_ at [http://x
 
 ## License
 
-This community plugin is licensed under the [MIT license][https://opensource.org/licenses/MIT].
+This community plugin is licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 See license in [LICENSE.md](LICENSE.md)
