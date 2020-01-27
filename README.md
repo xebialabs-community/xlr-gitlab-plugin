@@ -309,7 +309,7 @@ Properties:
 
 ### Tiles
 
-Dashboard tiles are included in this plugin, to visualize commit, merge request, and pipelines information.  These tiles use the existing XL Release GitLab server configuration/connection and can be configured using the (usual dashboard setup approach)[https://docs.xebialabs.com/v.9.0/xl-release/get-started?subject=dashboards].  These dashboard titles are available for all dashboard scopes - release, folder, and global.
+Dashboard tiles are included in this plugin, to visualize commit, merge request, and pipelines information.  These tiles use the existing XL Release GitLab server configuration/connection and can be configured using the [usual dashboard setup approach](https://docs.xebialabs.com/xl-release/get-started?subject=dashboards).  These dashboard titles are available for all dashboard scopes - release, folder, and global.
 
 ![Gitlab Dashboard Tiles 1](images/dashboard-1.png)
 ![Gitlab Webhook Configuration](images/dashboard-2.png)
