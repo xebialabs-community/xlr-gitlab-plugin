@@ -312,7 +312,7 @@ class Client(object):
             "path": variables["path"],
             "visibility": variables["visibility"],
         }
-        for optional_spec in ["description"]:
+        for optional_spec in ["description", "parent_id"]:
             if optional_spec in variables.keys():
                 group_spec[optional_spec] = variables[optional_spec]
         content = Client.build_content(group_spec)

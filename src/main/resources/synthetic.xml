@@ -41,6 +41,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <value label="Private">private</value>
       </enum-values>
     </property>
+    <property name="parent_id" category="input" label="Parent ID" required="false" description="Optionally, include a parent group ID for creating a nested group"/>
     <property name="group_id" category="output" label="Group ID"/>
   </type>
   <type type="gitlab.CreateMergeRequest" extends="gitlab.Task">
