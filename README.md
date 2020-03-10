@@ -46,7 +46,7 @@ The built plugin, along with other files from the build, can then be found in th
 
 ### Adding the plugin to XL Release
 
-Download the latest version of the plugin from the [releases page](https://github.com/xebialabs-community/xlr-qualys-plugin/releases).  The plugin can then be installed through the XL Release graphical interface or the server backend.  For additional detail, please refer to [the docs.xebialabs.com documentation on XLR plugin installation](https://docs.xebialabs.com/xl-release/how-to/install-or-remove-xl-release-plugins.html)
+Download the latest version of the plugin from the [releases page](https://github.com/xebialabs-community/xlr-gitlab-plugin/releases).  The plugin can then be installed through the XL Release graphical interface or the server backend.  For additional detail, please refer to [the docs.xebialabs.com documentation on XLR plugin installation](https://docs.xebialabs.com/xl-release/how-to/install-or-remove-xl-release-plugins.html)
 
 ## Usage
 
