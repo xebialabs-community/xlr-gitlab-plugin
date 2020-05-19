@@ -9,9 +9,9 @@ apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
 
-dependencies {
-  compile 'com.jayway.jsonpath:json-path:2.4.0'
-}
+//dependencies {
+//  compile 'com.jayway.jsonpath:json-path:2.3.0'
+//}
 
 xlDocker {
   compileImage = 'xebialabsunsupported/xlr_dev_compile'
