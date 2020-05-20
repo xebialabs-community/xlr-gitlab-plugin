@@ -234,6 +234,7 @@ class Client(object):
 
     @staticmethod
     def gitlab_triggerpipeline(variables):
+        headers = { "Content-Type": "application/x-www-form-urlencoded", "Accept": "application/json" }
         endpoint = "/api/v4/projects/{0}/ref/{1}/trigger/pipeline?token={2}".format(
             variables["project_id"], variables["ref"], variables["token"]
         )
@@ -242,7 +243,7 @@ class Client(object):
 
         print "* gitlab_triggerpipeline.endpoint: {0}".format(endpoint)
         data = Client.handle_response(
-            Client.get_request(variables).post(endpoint, "", contentType="")
+            Client.get_request(variables).post(endpoint, "", headers = headers)
         )
         print "[Pipeline #{0}]({1})".format(data["id"], data["web_url"])
         status = {"pipeline_id": str(data["id"]), "status": str(data["status"])}
