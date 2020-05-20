@@ -74,6 +74,7 @@ class Client(object):
 
     @staticmethod
     def gitlab_createmergerequest(variables):
+        headers = { "Content-Type": "application/json", "Accept": "application/json" }
         content = Client.build_content(
             {
                 "source_branch": variables["source_branch"],
@@ -88,7 +89,7 @@ class Client(object):
                     "/{}/merge_requests?".format(variables["project_id"]), variables
                 ),
                 content,
-                contentType="",
+                headers = headers,
             )
         )
         return {"merge_id": str(data.get("iid"))}
@@ -197,6 +198,7 @@ class Client(object):
 
     @staticmethod
     def gitlab_createtag(variables):
+        headers = { "Content-Type": "application/json", "Accept": "application/json" }
         content = Client.build_content(
             {
                 "tag_name": variables["tag_name"],
@@ -210,13 +212,14 @@ class Client(object):
                     "/{}/repository/tags?".format(variables["project_id"]), variables
                 ),
                 content,
-                contentType="",
+                headers = headers,
             )
         )
         return {"commit_id": str(data["commit"]["id"])}
 
     @staticmethod
     def gitlab_createbranch(variables):
+        headers = { "Content-Type": "application/json", "Accept": "application/json" }
         content = Client.build_content(
             {"branch": variables["branch"], "ref": variables["ref"]}
         )
@@ -227,7 +230,7 @@ class Client(object):
                     variables,
                 ),
                 content,
-                contentType="",
+                headers = headers,
             )
         )
         return {"commit_id": str(data["commit"]["id"])}
@@ -293,6 +296,7 @@ class Client(object):
 
     @staticmethod
     def gitlab_createproject(variables):
+        headers = { "Content-Type": "application/json", "Accept": "application/json" }
         proj_spec = {
             "name": variables["project_name"],
             "path": variables["path"],
@@ -309,12 +313,13 @@ class Client(object):
             Client.get_gitlab_api_key(variables)
         )
         data = Client.handle_response(
-            Client.get_request(variables).post(endpoint, content, contentType="")
+            Client.get_request(variables).post(endpoint, content, headers = headers)
         )
         return {"project_id": str(data["id"])}
 
     @staticmethod
     def gitlab_creategroup(variables):
+        headers = { "Content-Type": "application/json", "Accept": "application/json" }
         group_spec = {
             "name": variables["group_name"],
             "path": variables["path"],
@@ -328,7 +333,7 @@ class Client(object):
             Client.get_gitlab_api_key(variables)
         )
         data = Client.handle_response(
-            Client.get_request(variables).post(endpoint, content, contentType="")
+            Client.get_request(variables).post(endpoint, content, headers = headers)
         )
         return {"group_id": str(data["id"])}
 
@@ -397,6 +402,7 @@ class Client(object):
 
     @staticmethod
     def gitlab_createprojectwebhook(variables):
+        headers = { "Content-Type": "application/json", "Accept": "application/json" }
         content_params = [
             "url",
             "push_events",
@@ -422,7 +428,7 @@ class Client(object):
                     "/{}/hooks?".format(variables["project_id"]), variables
                 ),
                 content,
-                contentType="",
+                headers = headers,
             )
         )
         return {"hook_id": str(data["id"])}
