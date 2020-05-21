@@ -75,14 +75,17 @@ class Client(object):
     @staticmethod
     def gitlab_createmergerequest(variables):
         headers = { "Content-Type": "application/json", "Accept": "application/json" }
-        content = Client.build_content(
-            {
-                "source_branch": variables["source_branch"],
-                "target_branch": variables["target_branch"],
-                "title": variables["title"],
-                "target_project_id": variables["target_project_id"],
-            }
-        )
+        # content = Client.build_content(
+        #     {
+        #         "source_branch": variables["source_branch"],
+        #         "target_branch": variables["target_branch"],
+        #         "title": variables["title"],
+        #         "target_project_id": variables["target_project_id"],
+        #     }
+        # )
+        content ={ "source_branch": variables["source_branch"], "target_branch": variables["target_branch"],
+            "title": variables["title"], "target_project_id": variables["target_project_id"]}
+        content = json.dumps(content)
         data = Client.handle_response(
             Client.get_request(variables).post(
                 Client.build_projects_endpoint(
@@ -199,13 +202,19 @@ class Client(object):
     @staticmethod
     def gitlab_createtag(variables):
         headers = { "Content-Type": "application/json", "Accept": "application/json" }
-        content = Client.build_content(
-            {
-                "tag_name": variables["tag_name"],
-                "ref": variables["ref"],
-                "message": variables["message"],
-            }
-        )
+        # content = Client.build_content(
+        #     {
+        #         "tag_name": variables["tag_name"],
+        #         "ref": variables["ref"],
+        #         "message": variables["message"],
+        #     }
+        # )
+        content = {
+            "tag_name": variables["tag_name"],
+            "ref": variables["ref"],
+            "message": variables["message"]
+        }
+        content = json.dumps(content)
         data = Client.handle_response(
             Client.get_request(variables).post(
                 Client.build_projects_endpoint(
@@ -220,9 +229,11 @@ class Client(object):
     @staticmethod
     def gitlab_createbranch(variables):
         headers = { "Content-Type": "application/json", "Accept": "application/json" }
-        content = Client.build_content(
-            {"branch": variables["branch"], "ref": variables["ref"]}
-        )
+        # content = Client.build_content(
+        #     {"branch": variables["branch"], "ref": variables["ref"]}
+        # )
+        content = {"branch": variables["branch"], "ref": variables["ref"]}
+        content = json.dumps(content)
         data = Client.handle_response(
             Client.get_request(variables).post(
                 Client.build_projects_endpoint(
@@ -296,11 +307,11 @@ class Client(object):
 
     @staticmethod
     def gitlab_createproject(variables):
-        headers = { "Content-Type": "application/json", "Accept": "application/json" }
+        headers = { "Content-Type": "application/json", "Accept": "application/json"}
         proj_spec = {
             "name": variables["project_name"],
             "path": variables["path"],
-            "visibility": variables["visibility"],
+            "visibility": variables["visibility"]
         }
         for optional_spec in ["namespace", "description", "import_url"]:
             if optional_spec in variables.keys():
@@ -308,10 +319,11 @@ class Client(object):
                     "namespace_id" if optional_spec == "namespace" else optional_spec
                 )
                 proj_spec[api_attribute] = variables[optional_spec]
-        content = Client.build_content(proj_spec)
+        # content = Client.build_content(proj_spec)
         endpoint = "/api/v4/projects?private_token={0}".format(
             Client.get_gitlab_api_key(variables)
         )
+        content = json.dumps(proj_spec)
         data = Client.handle_response(
             Client.get_request(variables).post(endpoint, content, headers = headers)
         )
@@ -328,7 +340,8 @@ class Client(object):
         for optional_spec in ["description", "parent_id"]:
             if optional_spec in variables.keys():
                 group_spec[optional_spec] = variables[optional_spec]
-        content = Client.build_content(group_spec)
+        # content = Client.build_content(group_spec)
+        content = json.dumps(proj_spec)
         endpoint = "/api/v4/groups?private_token={0}".format(
             Client.get_gitlab_api_key(variables)
         )
@@ -421,7 +434,8 @@ class Client(object):
         for var_key in variables.keys():
             if var_key in content_params:
                 webhook[var_key] = variables[var_key]
-        content = Client.build_content(webhook)
+        # content = Client.build_content(webhook)
+        content = json.dumps(webhook)
         data = Client.handle_response(
             Client.get_request(variables).post(
                 Client.build_projects_endpoint(
