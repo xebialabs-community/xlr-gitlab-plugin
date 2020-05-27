@@ -298,7 +298,7 @@ class Client(object):
     @staticmethod
     def gitlab_tag_statuses(variables):
         headers = { "Content-Type": "application/json", "Accept": "application/json" }
-        endpoint = "/api/v4/projects/{0}/repository/tags?private_token={1}&order_by=updated&sort=asc".format(
+        endpoint = "/api/v4/projects/{0}/repository/tags?private_token={1}&order_by=updated&sort=desc".format(
             variables["project_id"], Client.get_gitlab_api_key(variables)
         )
         if variables["search"] not in [None, ""]:
