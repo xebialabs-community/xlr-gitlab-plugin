@@ -9,7 +9,7 @@
 #
 from gitlab.Client import Client
 
-client = Client.get_client()
+client = Client()
 method = str(task.getTaskType()).lower().replace(".", "_")
 call = getattr(client, method)
 response = call(locals())
