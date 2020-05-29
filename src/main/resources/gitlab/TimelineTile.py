@@ -17,8 +17,8 @@ def convertRFC3339ToDate(timestamp):
     zonedDateTime = ZonedDateTime.parse(timestamp)
     return zonedDateTime.toLocalDate()
 
-
-commits = json.loads(Client.gitlab_querycommits(locals())["commits"])
+client = Client()
+commits = json.loads(client.gitlab_querycommits(locals())["commits"])
 
 # Compile data for summary view
 commitsByDay = {}

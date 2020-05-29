@@ -39,7 +39,7 @@ def findNewCommit(oldCommitMap, newCommitMap):
 if gitlab_server is None:
     raise Exception("No GitLab server provided.")
 
-client = Client.get_client()
+client = Client()
 latestCommits = client.gitlab_branch_statuses(locals())
 
 # trigger state is persisted as json

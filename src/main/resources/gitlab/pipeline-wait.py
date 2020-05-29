@@ -11,7 +11,7 @@
 from gitlab.Client import Client
 import sys
 
-client = Client.get_client()
+client = Client()
 response = client.gitlab_pipeline_status(locals())
 if response is not None:
     for key, value in response.items():

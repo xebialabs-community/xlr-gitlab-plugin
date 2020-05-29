@@ -15,7 +15,7 @@ import json
 if gitlab_server is None:
     raise Exception("No GitLab server provided.")
 
-client = Client.get_client()
+client = Client()
 latestTag = client.gitlab_tag_statuses(locals())[0]
 newTriggerState = json.dumps(latestTag)
 

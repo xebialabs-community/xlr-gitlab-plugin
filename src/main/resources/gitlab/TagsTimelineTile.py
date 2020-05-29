@@ -17,8 +17,8 @@ def convertRFC3339ToDate(timestamp):
     zonedDateTime = ZonedDateTime.parse(timestamp)
     return zonedDateTime.toLocalDate()
 
-
-tags = json.loads(Client.gitlab_querytags(locals())["tags"])
+client = Client()
+tags = json.loads(client.gitlab_querytags(locals())["tags"])
 
 # Compile data for summary view
 tagsByDay = {}
