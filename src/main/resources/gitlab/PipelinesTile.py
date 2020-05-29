@@ -11,4 +11,5 @@
 import json
 from gitlab.Client import Client
 
-data = {"pipelines": json.loads(Client.gitlab_querypipelines(locals())["pipelines"])}
+client = Client()
+data = {"pipelines": json.loads(client.gitlab_querypipelines(locals())["pipelines"])}

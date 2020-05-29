@@ -11,7 +11,8 @@
 import json
 from gitlab.Client import Client
 
-commits = json.loads(Client.gitlab_querycommits(locals())["commits"])
+client = Client()
+commits = json.loads(client.gitlab_querycommits(locals())["commits"])
 
 authors = {}
 committers = {}
