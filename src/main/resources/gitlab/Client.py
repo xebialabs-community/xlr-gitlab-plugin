@@ -89,7 +89,7 @@ class Client(object):
                     variables,
                 ),
                 "",
-                contentType="",
+                contentType="application/json",
             )
         )
 
