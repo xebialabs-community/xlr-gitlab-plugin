@@ -311,8 +311,7 @@ Properties:
 
 Dashboard tiles are included in this plugin, to visualize commit, merge request, and pipelines information.  These tiles use the existing XL Release GitLab server configuration/connection and can be configured using the [usual dashboard setup approach](https://docs.xebialabs.com/xl-release/get-started?subject=dashboards).  These dashboard titles are available for all dashboard scopes - release, folder, and global.
 
-![Gitlab Dashboard Tiles 1](images/dashboard-1.png)
-![Gitlab Webhook Configuration](images/dashboard-2.png)
+![Gitlab Dashboard Tiles](images/dashboard.png)
 
 #### Commits Tile
 Properties:
@@ -343,6 +342,13 @@ Properties:
 * _input_ Target Branch (If a merge request target branch is provided, only matching merge requests will be returned.  For the value, provide a branch name, such as "master")
 
 #### Pipelines Tile
+Properties:
+*  Title
+* _input_ GitLab Server 
+* _input_ API Key (Optionally, provide an API token to override the server configuration)
+* _input_ Project ID (This is visible in the GUI and should be an integer)
+
+#### Pipelines Timeline Tile
 Properties:
 *  Title
 * _input_ GitLab Server 
