@@ -353,6 +353,13 @@ class Client(object):
         data = self.handle_response(self.get_request(variables).get(endpoint, contentType="application/json"))
         return {"pipelines": str(json.dumps(data))}
 
+    def gitlab_querypipeline(self, variables, id):
+        endpoint = "/api/v4/projects/{0}/pipelines/{1}?private_token={2}".format(
+            variables["project_id"], id, self.get_gitlab_api_key(variables)
+        )
+        data = self.handle_response(self.get_request(variables).get(endpoint, contentType="application/json"))
+        return {"pipeline": str(json.dumps(data))}
+
     def gitlab_createprojectwebhook(self, variables):
         content_params = [
             "url",

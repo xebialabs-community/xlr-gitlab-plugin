@@ -251,6 +251,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <property name="api_key" category="input" required="false" label="API Key" description="Optionally, provide an API token to override the server configuration"/>
     <property name="project_id" category="input" required="true" label="Project ID" description="This is visible in the GUI and should be an integer"/>
   </type>
+  <type type="gitlab.PipelinesTimelineTile" label="GitLab Pipeline Trends" extends="xlrelease.Tile" description="Display the latest pipeline executions in a bar chart">
+    <property name="supportedScopes" kind="list_of_string" hidden="true" default="release,folder,global"/>
+    <property name="uri" hidden="true" default="pipelines-timeline-summary.html"/>
+    <property name="title" default="GitLab Pipeline Trends" description="Tile title."/>
+    <property name="gitlab_server" category="input" kind="ci" referenced-type="gitlab.Server" label="GitLab Server"/>
+    <property name="api_key" category="input" required="false" label="API Key" description="Optionally, provide an API token to override the server configuration"/>
+    <property name="project_id" category="input" required="true" label="Project ID" description="This is visible in the GUI and should be an integer"/>
+  </type>
   <type type="gitlab.TagsTimelineTile" label="GitLab Tags Timeline Tile" extends="xlrelease.Tile" description="Display a timeline of tags">
     <property name="supportedScopes" kind="list_of_string" hidden="true" default="release,folder,global"/>
     <property name="uri" hidden="true" default="tags-timeline-summary.html"/>
