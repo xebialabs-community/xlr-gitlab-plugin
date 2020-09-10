@@ -14,9 +14,9 @@ params = {
     "proxyUsername": configuration.proxyUsername,
     "proxyPassword": configuration.proxyPassword,
 }
-headers = { "Content-Type": "application/json", "Accept": "application/json" }
+
 response = HttpRequest(params).get(
-    "/api/v4/projects?private_token=%s" % configuration.api_key, headers=headers
+    "/api/v4/projects?private_token=%s" % configuration.api_key, contentType="application/json"
 )
 if response.status != 200:
     raise Exception(
