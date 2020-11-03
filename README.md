@@ -383,3 +383,25 @@ Please review the contributing guidelines for _xebialabs-community_ at [http://x
 This community plugin is licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 See license in [LICENSE.md](LICENSE.md)
+## References
+
+## How to release a new  candidate version
+
+```
+$./gradlew candidate
+```
+
+This command automaticaly tags the version, pushes it remotely and
+trigger a release build. The script: `./buildViaTravis.sh` manages to
+run the right command.
+
+## How to release a new version
+
+```
+$./gradlew final
+```
+
+This command automaticaly tags the version, pushes it remotely and
+trigger a release build. The script: `./buildViaTravis.sh` manages to
+run the right command.
+

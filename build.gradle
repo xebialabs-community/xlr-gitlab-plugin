@@ -6,8 +6,6 @@ plugins {
     id "com.github.hierynomus.jython" version "0.11.0"
 }
 
-
-
 xlDocker {
   compileImage = 'xebialabsunsupported/xlr_dev_compile'
   compileVersion = '9.0.6'
@@ -15,15 +13,6 @@ xlDocker {
   runVersion = '9.0.6'
   runPortMapping = '15516:5516'
 }
-
-if (!project.hasProperty('release.scope')) {
-  project.ext['release.scope'] = 'patch'
-}
-
-if (!project.hasProperty('release.useLastTag')) {
-  project.ext['release.useLastTag'] = true
-}
-
 
 license {
   header rootProject.file('LICENSE.md')
