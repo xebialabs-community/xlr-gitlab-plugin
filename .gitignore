@@ -8,4 +8,4 @@ supervisord.*
 .settings/
 .classpath
 bin/
-.venv/
+.venv/.DS_Store

@@ -1,17 +1,12 @@
 plugins {
-  id "com.github.hierynomus.license" version "0.14.0"
-  id "com.xebialabs.xl.docker" version "1.1.0"
-  id 'nebula.release' version '6.0.0'
+    id "com.github.hierynomus.license" version "0.14.0"
+    id "com.xebialabs.xldp" version "1.0.5"
+    id 'nebula.release' version '15.2.0'
+    id "com.xebialabs.xl.docker" version "1.1.0"
+    id "com.github.hierynomus.jython" version "0.11.0"
 }
 
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'eclipse'
-apply plugin: 'maven'
 
-//dependencies {
-//  compile 'com.jayway.jsonpath:json-path:2.3.0'
-//}
 
 xlDocker {
   compileImage = 'xebialabsunsupported/xlr_dev_compile'
