@@ -1,7 +1,7 @@
 
 # GitLab Integration for XL Release
 
-[![Build Status](https://travis-ci.org/xebialabs-community/xlr-gitlab-plugin.svg?branch=master)](https://travis-ci.org/xebialabs-community/xlr-gitlab-plugin)
+[![Build Status](https://github.com/xebialabs-community/xlr-gitlab-plugin/workflows/build/badge.svg)](https://github.com/xebialabs-community/xlr-gitlab-plugin/actions)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/bf3bcce182d649eabb81183af545c80c)](https://www.codacy.com/app/erasmussen39/xlr-gitlab-plugin?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=xebialabs-community/xlr-gitlab-plugin&amp;utm_campaign=Badge_Grade)
 [![Maintainability](https://api.codeclimate.com/v1/badges/080f8c6a66e9d765d11e/maintainability)](https://codeclimate.com/github/xebialabs-community/xlr-gitlab-plugin/maintainability)
 [![License: MIT][xlr-gitlab-plugin-license-image] ][xlr-gitlab-plugin-license-url]
