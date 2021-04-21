@@ -11,6 +11,9 @@
 [xlr-gitlab-plugin-license-url]: https://opensource.org/licenses/MIT
 [xlr-gitlab-plugin-downloads-image]: https://img.shields.io/github/downloads/xebialabs-community/xlr-gitlab-plugin/total.svg
 
+XLR GitLab plugin is deprecated now as the plugin is insourced to xebialabs organization.
+The plugin is available on https://github.com/xebialabs/xlr-gitlab-plugin
+
 ## Table of Contents
 + [Background](#background)
 + [Installation](#installation)
